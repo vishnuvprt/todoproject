@@ -1,0 +1,63 @@
+{% extends 'PM/index.html' %}
+{% block body %}
+
+
+
+
+              <!-- Table with stripped rows -->
+                   <table class="table table-bordered table-striped table-hover ">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Task</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Due date</th>
+                        <th scope="col">Status</th>
+ 
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for i in data %}
+
+                      <tr {% if i.duedate > today|date:'Y-m-d' %} table-danger {% endif %}>
+                        <th scope="row"><a href="#">{{ forloop.counter }}</a></th>
+                        <td>
+                          <h4>{{ i.title }} </h4><br>{{ i.description }}
+                        </td>
+                        <td>{{ i.priority }}</td>
+                        <td>{{ i.duedate }}</td>
+                        <td>{{ i.status }}</td>
+                      </tr>
+
+
+                    {% endfor %}
+
+
+
+                    </tbody>
+                  </table>
+              <!-- End Table with stripped rows -->
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends 'User/index.html' %}
+{% block body %}
+
+<body>
+
+ <!-- Table with stripped rows -->
+
+ <form id="task-filter-form">
+  {% csrf_token %}
+  <div align="left" class="p-1 m-1">{{ fform.as_p }} 
+    <select id="sort-option" class="form-select-sm" name="sort_by">
+      <option value="title">Sort by Title</option>
+      <option value="priority">Sort by Priority</option>
+  </select>
+  <button type="submit" class="btn btn-primary">Filter <i class="bi bi-search"></i></button></div>
+</form>
+
+    <table class="table table-bordered table-striped table-hover " id="task-table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Task</th>
+        <th scope="col">Description</th>
+        <th scope="col">Due date</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in data %}
+      <tr data-task-id="{{ i.id }}">
+        <th scope="row"><a href="#">{{ forloop.counter }}</a></th>
+        <td>{{ i.title }}</td>
+        <td>{{ i.description }}</td>
+        <td>{{ i.duedate }}    </td>
+        <td>{% if i.priority == 'High' %}<span class="badge bg-danger">High </span>
+          {% elif i.priority == 'Medium'  %} <span class="badge bg-primary">Medium </span> {% else %} <span class="badge bg-success">Low </span> {% endif %}
+         </td>
+        <td><a href="#" id="edit-task-btn" class="btn btn-primary edit-task-btn" data-task-id="{{ i.id }}" > <i class="bi-pencil"></i></a></td>
+        <td><a href="#" id="deletetask" class="btn btn-danger" data-task-id="{{ i.id }}" > <i class="bi-trash"></i></a></td>
+        <td><a href="{% url 'subtask' i.id %}" id="showAddFormLink" class="btn btn-primary">Subtask <i class="bi-list-task"></i></a></td>
+      </tr>
+      {% endfor %}
+
+    </tbody>
+    </table>
+
+    <div id="task-pagination-links" class="mt-3">
+      {% if data.has_other_pages %}
+          <ul class="pagination">
+              {% if data.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+                  <li class="page-item"><a class="page-link" href="?page={{ data.previous_page_number }}">Previous</a></li>
+              {% endif %}
+              <li class="page-item active"><span class="page-link">{{ data.number }}</span></li>
+              {% if data.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{ data.next_page_number }}">Next</a></li>
+                  <li class="page-item"><a class="page-link" href="?page={{ data.paginator.num_pages }}">Last</a></li>
+              {% endif %}
+          </ul>
+      {% endif %}
+  </div>
+  
+    <!-- End Table with stripped rows -->
+
+
+
+
+
+
+
+ <!-- Floating form for add project -->
+
+    <div class="modal fade" id="EditTaskFormModal" tabindex="-1" aria-labelledby="EditTaskFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="formModalLabel">Update Task</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+                  <!-- Floating Labels Form -->
+                     <form class="row g-3" id="EditTaskForm" method="post" action="">
+                      {% csrf_token %}
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                          {{ form.title }}
+                        <label for="{{ form.title.id_for_label }}">Title</label>
+                      </div>
+                    </div>
+                      <div class="col-12">
+                      <div class="form-floating">
+                          {{ form.description }}
+                        <label for="{{ form.descriptiom.id_for_label }}">Description</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                          {{ form.duedate }}
+                        <label for="{{ form.duedate.id_for_label }}">Due Date</label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-floating mb-3">
+                          {{ form.priority }}
+                        <label for="{{ form.priority.id_for_label }}">Priority</label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-floating mb-3">
+                        {{ form.status }}
+                        <label for="{{ form.status.id_for_label }}">Status</label>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary " id="EditTaskSubmit">Submit</button>
+          </div>
+                  </form><!-- End floating Labels Form -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/ajax.js"></script>
+
+
+
+
+
+
+</body>
+{% endblock %}

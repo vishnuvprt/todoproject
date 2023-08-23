@@ -1,0 +1,42 @@
+{% extends 'User/index.html' %}
+{% block body %}
+
+<body>
+
+          <!-- Table with stripped rows -->
+      
+              <table class="table table-bordered table-striped table-hover " id="projects-table-user">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Notification</th>
+                    <th scope="col">Expected Date</th>
+                    <th scope="col">Project</th>
+                  
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in tasks_due_soon %}
+                  <tr>
+                    <th scope="row"><a href="#">{{ forloop.counter }} </a> 
+                      {% if i.priority == 'High' %}<span class="badge bg-danger">High </span>
+                      {% elif i.priority == 'Medium'  %} <span class="badge bg-primary">Medium </span> {% else %} <span class="badge bg-success">Low </span> {% endif %}
+                    
+                    </th>
+                    <td><h4>{{ i.title }}</h4><br><p>{{ i.description }}</p></td>
+                    <td>{{ i.duedate }}</td>
+                    <td>{{ i.PROJECT.projectname }}</td>
+                  </tr>
+                  {% endfor %}
+
+                </tbody>
+              </table>
+
+              
+
+
+
+
+
+</body>
+{% endblock %}
