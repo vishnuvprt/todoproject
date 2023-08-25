@@ -78,3 +78,7 @@ class Logs(models.Model):
     timestamp = models.DateTimeField()
 
 
+
+class ReminderSetting(models.Model):
+    USER=models.OneToOneField(Users,on_delete=models.CASCADE)
+    status=models.CharField(max_length=10,default='On')

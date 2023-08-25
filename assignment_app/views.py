@@ -144,8 +144,6 @@ class UserDashboardClass(View):
         import datetime
         lobj=Logs.objects.filter(USER=Users.objects.get(LOGIN=request.session['lid'])).order_by('-timestamp')
 
-       
-    
         return render(request, self.template_name,{'data':lobj})
 
 
@@ -994,7 +992,8 @@ class UserProfileClass(View):
         
         uobj=Users.objects.get(LOGIN=request.session['lid'])
         eform=editprofileform()
-        return render(request,self.template_name,{'data':uobj,'eform':eform})
+        rform=SettingsForm()
+        return render(request,self.template_name,{'data':uobj,'eform':eform,'rform':rform})
 
 
 
@@ -1120,6 +1119,38 @@ class GetProfilePhotoView(View):
             return JsonResponse({'photo': photo_url})
         except Users.DoesNotExist:
             return JsonResponse({'photo': '/static/assets/img/20230814095643.jpg'})
+
+
+
+class GetReminderStatus(View):
+    @method_decorator([login_required])
+    def get(self, request, *args, **kwargs):
+        user = request.session['lid']
+        try:
+            rs = ReminderSetting.objects.get(USER=Users.objects.get(LOGIN=user))
+            rss = rs.status
+        except ReminderSetting.DoesNotExist:
+            rss = 'On'
+        
+        return JsonResponse({'rs': rss})
+
+class UpdateReminderStatus(View):
+    @method_decorator([login_required])
+    def post(self, request, *args, **kwargs):
+        user = request.session['lid']
+        status = request.POST.get('status')  # Assuming you send the status from AJAX
+        
+        try:
+            rs = ReminderSetting.objects.get(USER=Users.objects.get(LOGIN=user))
+            rs.status = status
+            rs.save()
+        except ReminderSetting.DoesNotExist:
+            ReminderSetting.objects.create(USER=Users.objects.get(LOGIN=user), status=status)
+        
+        return JsonResponse({'status': 'updated'})
+
+
+
 
 
 

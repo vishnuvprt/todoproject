@@ -556,4 +556,18 @@ class add_task_form_2(forms.Form):
             required=True
         )
 
-        
+
+
+class SettingsForm(forms.Form):
+      reminder_enabled = forms.BooleanField(
+        label="Enable Reminder",
+        required=False,
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input','id':'flexSwitch'}),
+    )
+
+
+
+
+
+
+

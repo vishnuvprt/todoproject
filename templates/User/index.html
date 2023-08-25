@@ -67,8 +67,12 @@
 
           <a class="nav-link nav-icon" href="{% url 'notifications' %}" >
             <i class="bi bi-bell"></i>
+            {% if noticount == 0  %}
+
+            {% else %}
             <span class="badge bg-primary badge-number">{{ noticount }}</span>
-          </a>
+            {% endif %}
+          </a> 
           <!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">

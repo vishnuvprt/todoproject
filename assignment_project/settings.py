@@ -73,6 +73,7 @@ TEMPLATES = [
                 'assignment_app.totalprojects.Ongoing_tasks',
                 'assignment_app.notificationcount.totalnoticount',
                 'assignment_app.photoandname.pandn',
+                'assignment_app.photoandname.sonoff',
             ],
         },
     },

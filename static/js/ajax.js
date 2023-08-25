@@ -1082,8 +1082,45 @@ const personList = $('#staff-table');
 
 
 
+ var csrftoken = $('input[name=csrfmiddlewaretoken]').val();
 
-
+ $.ajax({
+     type: 'GET',
+     url: '/myapp/reminders/',
+     dataType: 'json',
+     success: function(response) {
+         var reminderStatus = response.rs;
+         if (reminderStatus === 'On') {
+             $('#flexSwitch').prop('checked', true);
+         } else {
+             $('#flexSwitch').prop('checked', false);
+         }
+     },
+     error: function(xhr, status, error) {
+         console.error('Error getting reminder status:', error);
+     }
+ });
+ 
+ $('#flexSwitch').on('change', function() {
+     var isChecked = $(this).prop('checked');
+     var newStatus = isChecked ? 'On' : 'Off';
+ 
+     $.ajax({
+         type: 'POST',
+         url: '/myapp/updatereminders/',
+         data: { 'status': newStatus }, 
+         dataType: 'json',
+         beforeSend: function(xhr, settings) {
+             xhr.setRequestHeader('X-CSRFToken', csrftoken);
+         },
+         success: function(response) {
+             console.log('Reminder status updated:', response.status);
+         },
+         error: function(xhr, status, error) {
+             console.error('Error updating reminder status:', error);
+         }
+     });
+ });
 
 
 

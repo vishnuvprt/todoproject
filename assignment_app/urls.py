@@ -47,6 +47,8 @@ urlpatterns = [
     path('remove-profile-photo/', RemoveProfilePhotoView.as_view(), name='remove_profile_photo'),
     path('edit-profile/', EditProfileClass.as_view(), name='edit_profile'),
     path('notifications/', NotificationClass.as_view(), name='notifications'),
+    path('reminders/', GetReminderStatus.as_view(), name='reminders'),
+    path('updatereminders/', UpdateReminderStatus.as_view(), name='updatereminders'),
 
 
 
