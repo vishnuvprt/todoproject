@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    var rowIndex = 1;
     $('#addform').submit(function(event) {
         event.preventDefault();
         
@@ -13,20 +12,17 @@ $(document).ready(function() {
 
                 alert('New Project Added!');
                 
-
-            
-
                 var newRow = '<tr>' +
-                '<th scope="row"><a href="#">'+rowIndex+'</a></th>' +
-                '<td>' + response.projectname + '</td>' +
-                '<td><a href="#" class="text-primary">' + response.description + '</a></td>' +
+                '<th scope="row">'+response.slno+'</th>' +
+                '<td><a href="#" class="text-primary">' + response.projectname + '</a></td>' +
+                '<td>' + response.description + '</td>' +
                 '<td>' + response.startdate + ' to ' + response.enddate + '<br>' + response.duration + '</td>' +
+                '<td><span class="badge bg-info"><i class="bi circle"></i>'+response.status+'</span></td>' +
                 '<td><a href="#" class="btn btn-primary edit-btn" data-bs-toggle="modal" data-bs-target="#editFormModal" data-project-id="' + response.id + '"> <i class="bi bi-pencil"></i></a></td>' +
                 '<td><a href="#" class="btn btn-danger delete-button" id="delete" yy="' + response.id + '"> <i class="bi bi-trash"></i></a></td>' +
                 '</tr>';
 
                 $('#projects-table tbody').append(newRow);
-                rowIndex++;
                 $('#addFormModal').modal('hide');
 
 
@@ -49,7 +45,9 @@ $(document).ready(function() {
     var projectIdr;
     editBtns.forEach(btn => {
         btn.addEventListener('click', (event) => {
+
             const projectId = btn.getAttribute('data-project-id');
+            console.log(projectId);
             projectIdr=projectId
             $.ajax({
             url: '/myapp/projects/' + projectId + '/edit/', 
@@ -127,23 +125,23 @@ $(document).ready(function() {
                 editedRow.find('td:eq(1)').html(response.description);
                 editedRow.find('td:eq(2)').html(response.startdate + ' to ' + response.enddate + '<br>' + response.duration);
                 if(response.status=='Completed'){
-                    editedRow.find('td:eq(3)').html('<span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>'+response.status+'</span>');
+                    editedRow.find('td:eq(3)').html('<span class="badge bg-success"><i class="bi circle "></i>'+response.status+'</span>');
                 }
                 else if(response.status=='Ongoing'){
-                    editedRow.find('td:eq(3)').html('<span class="badge bg-primary"><i class="bi bi-check-circle me-1"></i>'+response.status+'</span>');
+                    editedRow.find('td:eq(3)').html('<span class="badge bg-primary"><i class="bi circle "></i>'+response.status+'</span>');
 
                 }
                 else if(response.status=='Cancel'){
-                    editedRow.find('td:eq(3)').html('<span class="badge bg-danger"><i class="bi bi-check-circle me-1"></i>'+response.status+'</span>');
+                    editedRow.find('td:eq(3)').html('<span class="badge bg-danger"><i class="bi circle "></i>'+response.status+'</span>');
 
                 }
                 else if(response.status=='Onhold'){
-                    editedRow.find('td:eq(3)').html('<span class="badge bg-secondary"><i class="bi bi-check-circle me-1"></i>'+response.status+'</span>');
+                    editedRow.find('td:eq(3)').html('<span class="badge bg-secondary"><i class="bi circle "></i>'+response.status+'</span>');
 
                 }
                 else{
 
-                   editedRow.find('td:eq(3)').html('<span class="badge bg-info"><i class="bi bi-check-circle me-1"></i>'+response.status+'</span>');
+                   editedRow.find('td:eq(3)').html('<span class="badge bg-info"><i class="bi circle "></i>'+response.status+'</span>');
                 }
 
 
@@ -212,6 +210,7 @@ const paginationLinks = $('#pagination-links');
 filterForm.on('submit', function(event) {
     event.preventDefault();
     var c=1;
+    var status;
     $.ajax({
         type: 'GET',
         url: filterForm.attr('action'),
@@ -221,13 +220,37 @@ filterForm.on('submit', function(event) {
 
             projectsTable.empty();
 
+
             response.project.forEach(function(project) {
+
+
+                if(project.status=='Completed'){
+                    status='<span class="badge bg-success"><i class="bi circle "></i>'+project.status+'</span>'
+                }
+                else if(project.status=='Ongoing'){
+                    status='<span class="badge bg-primary"><i class="bi circle "></i>'+project.status+'</span>'
+                }
+                else if(project.status=='Cancel'){
+                    status='<span class="badge bg-danger"><i class="bi circle "></i>'+project.status+'</span>'
+                }
+                else if(project.status=='Onhold'){
+
+                    status='<span class="badge bg-secondary"><i class="bi circle "></i>'+project.status+'</span>'
+
+                }
+                else{
+
+                    status='<span class="badge bg-info"><i class="bi circle "></i>'+project.status+'</span>'
+
+                }
+
                 const newRow = `
                     <tr>
                         <td><a href="#">`+c+`</a></td>
                         <td><a href="/myapp/projectteam/${project.id}">${project.projectname}</a></td>
                         <td>${project.description}</td>
                         <td>${project.startdate} to ${project.enddate}<br>${project.duration}</td>
+                        <td>${status}</td>
                         <td><a href="#" class="btn btn-primary edit-btn" data-bs-toggle="modal" data-bs-target="#editFormModal" data-project-id="${ project.id }"> <i class="bi bi-pencil"></i></a></td>
                         <td><a href="#" class="btn btn-danger delete-button" id="delete" yy="${ project.id }"> <i class="bi bi-trash"></i></a></td>
                     </tr>`;
@@ -788,16 +811,40 @@ filterFormuser.on('submit', function(event) {
 
             projectsTableUser.empty();
             var c = 1;
+            var status;
 
             response.project.forEach(function(project) {
+
+                if(project.status=='Completed'){
+                    status='<span class="badge bg-success"><i class="bi circle "></i>'+project.status+'</span>'
+                }
+                else if(project.status=='Ongoing'){
+                    status='<span class="badge bg-primary"><i class="bi circle "></i>'+project.status+'</span>'
+                }
+                else if(project.status=='Cancel'){
+                    status='<span class="badge bg-danger"><i class="bi circle "></i>'+project.status+'</span>'
+                }
+                else if(project.status=='Onhold'){
+
+                    status='<span class="badge bg-secondary"><i class="bi circle "></i>'+project.status+'</span>'
+
+                }
+                else{
+
+                    status='<span class="badge bg-info"><i class="bi circle "></i>'+project.status+'</span>'
+
+                }
+
+
                 const newRow = `
                     <tr>
                         <td><a href="#">${c}</a></td>
                         <td><a href="{% url 'projectteam' ${project.id} %}">${project.projectname}</a></td>
                         <td>${project.description}</td>
                         <td>${project.startdate} to ${project.enddate}<br>${project.duration}</td>
+                        <td>${status}</td>
                         <td><a href="#" class="btn btn-primary add-task-button" data-bs-toggle="modal" data-bs-target="#addTaskModal" data-project-id="${ project.id }" >Add Task <i class="bi bi-plus"></i></a></td>
-                        <td><a href="{% url 'userviewtasks' ${ project.id } %}" class="btn btn-danger">Tasks <i class="bi bi-list-task"></i></a></td>
+                        <td><a href="/myapp/userviewtasks/${ project.id }" class="btn btn-danger">Tasks <i class="bi bi-list-task"></i></a></td>
                     </tr>`;
                     projectsTableUser.append(newRow);
                 c++;
@@ -863,7 +910,6 @@ taskfilterFormuser.on('submit', function(event) {
 
 
             });
-            const sortOption = $('#sort-option').val();
             const newURL = new URL(response.pagination_links);
             newURL.searchParams.set('sort_by', sortOption);
             response.pagination_links = newURL.toString();
@@ -875,6 +921,97 @@ taskfilterFormuser.on('submit', function(event) {
         }
     });
 });
+
+const projectid = $('#projectid').val();
+
+$('#sort-option').on('change', function() {
+    var sortOption = $(this).val();
+    $.ajax({
+        type: 'GET',
+        url: `/myapp/userviewtasks/${projectid}/sort/`, // Use the correct URL path
+        data: { 'sort_by': sortOption },
+        dataType: 'json',
+        success: function(response) {
+            taskTableUser.empty(); 
+            
+            response.tasks.forEach(function(i) {
+                var pp = "";
+                if (i.priority == 'High') {
+                    pp = '<span class="badge bg-danger">High </span>';
+                } else if (i.priority == 'Medium') {
+                    pp = '<span class="badge bg-primary">Medium </span>';
+                } else {
+                    pp = '<span class="badge bg-success">Low </span>';
+                }
+
+                const newRow = `
+                    <tr>
+                        <td>...</td>
+                        <td>${i.title}</td>
+                        <td>${i.description}</td>
+                        <td>${i.duedate}</td>
+                        <td>${pp}</td>
+                        <td><a href="#" class="btn btn-primary edit-task-btn" data-task-id="${i.id}"><i class="bi-pencil"></i></a></td>
+                        <td><a href="#" class="btn btn-danger" data-task-id="${i.id}"><i class="bi-trash"></i></a></td>
+                        <td><a href="/myapp/subtask/${i.id}" class="btn btn-primary">Subtask <i class="bi-list-task"></i></a></td>
+                    </tr>`;
+                taskTableUser.append(newRow);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error sorting task:', error);
+        }
+    });
+});
+
+
+
+$('#sort-option-task').on('change', function() {
+    var sortOption = $(this).val();
+    $.ajax({
+        type: 'GET',
+        url: `/myapp/usertasks/sort`, // Use the correct URL path
+        data: { 'sort_by': sortOption },
+        dataType: 'json',
+        success: function(response) {
+            taskTableUser.empty(); 
+            
+            response.tasks.forEach(function(i) {
+                var pp = "";
+                if (i.priority == 'High') {
+                    pp = '<span class="badge bg-danger">High </span>';
+                } else if (i.priority == 'Medium') {
+                    pp = '<span class="badge bg-primary">Medium </span>';
+                } else {
+                    pp = '<span class="badge bg-success">Low </span>';
+                }
+
+                const newRow = `
+                    <tr>
+                        <td>...</td>
+                        <td>${i.title}</td>
+                        <td>${i.description}</td>
+                        <td>${i.duedate}</td>
+                        <td>${pp}</td>
+                        <td><a href="#" class="btn btn-primary edit-task-btn" data-task-id="${i.id}"><i class="bi-pencil"></i></a></td>
+                        <td><a href="#" class="btn btn-danger" data-task-id="${i.id}"><i class="bi-trash"></i></a></td>
+                        <td><a href="/myapp/subtask/${i.id}" class="btn btn-primary">Subtask <i class="bi-list-task"></i></a></td>
+                    </tr>`;
+                taskTableUser.append(newRow);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error sorting task:', error);
+        }
+    });
+});
+
+
+
+
+
+
+
 
 
 
@@ -928,55 +1065,6 @@ const personList = $('#staff-table');
  });
 
 
-
- const newPasswordInput = document.getElementById('yourPassword');
-    const confirmPasswordInput = document.getElementById('yourCPassword');
-    const saveButton = document.getElementById('saveButton');
-    const pmis = document.getElementById('pmis');
-   
-    function updateSaveButtonState() {
-        const newPassword = newPasswordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
-
-        if (newPassword !== confirmPassword) {
-            pmis.style.display = 'block';
-            saveButton.disabled = true;
-        } else {
-            pmis.style.display = 'none';
-            saveButton.disabled = false;
-        }
-    }
-
-    newPasswordInput.addEventListener('input', updateSaveButtonState);
-    confirmPasswordInput.addEventListener('input', updateSaveButtonState);
-
-    $('form[id="cpform"]').validate({
-        rules: {
-            oldpassword: {
-                required: true,
-            },
-            newpassword: {
-                required: true,
-                minlength: 8,
-                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
-            },
-            confirmpassword: {
-                equalTo: '#id_newpassword',
-            },
-        },
-        messages: {
-            newpassword: {
-                minlength: 'Password must be at least 8 characters long',
-                pattern: 'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character (@$!%*?&)',
-            },
-            confirmpassword: {
-                equalTo: 'Passwords do not match',
-            },
-        },
-        submitHandler: function(form) {
-            form.submit();
-        }
-    });
 
 
 

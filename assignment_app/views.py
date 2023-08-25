@@ -117,7 +117,8 @@ class ChangePasswordAdmin(View):
 
                 return render(request, "PM/change-password.html", {'form': form,'Error':'User not found'})
         else:
-            return render(request, "PM/change-password.html", {'form': form})
+            print(form.errors)
+            return render(request, "PM/change-password.html", {'form': form,'Error':form.errors})
 
 
 
@@ -204,13 +205,15 @@ class Project_Class(View):
                 startd=form.cleaned_data['startdate']
                 endd=form.cleaned_data['enddate']
                 duration=form.cleaned_data['duration']
-                ptype=form.cleaned_data['project_type'] 
+                ptype=form.cleaned_data['project_type']
+                pc=Project.objects.all().count() 
                 pobj=Project.objects.create(projectname=pname,description=description,startdate=startd,enddate=endd,duration=duration,type=ptype,status='Pending')
                 selected_users = form.cleaned_data['user_field']
                 for i in selected_users:
                     ProjectTeams.objects.create(PROJECT=pobj,USER=i)
                 
-
+                
+                pc=pc+1
 
                 return JsonResponse({'message':'ok','projectname': pname,
                     'description': description,
@@ -218,7 +221,11 @@ class Project_Class(View):
                     'enddate': endd,
                     'duration': duration,
                     'project_type': ptype,
-                    'id': pobj.id })
+                    'status': 'pending',
+                    'id': pobj.id,
+                    'slno':pc
+                    
+                    })
             else:
                 errors = form.errors.as_json()
                 return JsonResponse({'errors': errors}, status=400)
@@ -262,7 +269,7 @@ class UserViewAssignedProjects(View):
         projects=self.get_queryset()
         fform=self.form_class(self.request.GET)
 
-        paginator = Paginator(projects, 2)  
+        paginator = Paginator(projects, 5)  
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
@@ -417,7 +424,7 @@ class StaffsClass(View):
             name = form.cleaned_data.get('name')
             persons = self.get_queryset(name)
             
-            paginator = Paginator(persons, 2)  
+            paginator = Paginator(persons, 5)  
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
 
@@ -517,7 +524,7 @@ class AddnewTaskClass(View):
                     return JsonResponse({'message': 'Task added successfully'})
                 else:
                     status='Project '+pobj.status
-                    return JsonResponse({'message':status})
+                    return JsonResponse({'message':status+',Contact Project cordinator for further details'})
 
 
             else:
@@ -538,7 +545,6 @@ class UserViewTasksClass(View):
     form_class=FilterTaskForm
     def get_queryset(self):
         queryset= Task.objects.filter(PROJECT=self.request.session['projectid'], USER=Users.objects.get(LOGIN=self.request.session['lid']))
-        print(queryset,"dataaaaaaaa")
         form=self.form_class(self.request.GET)
         if form.is_valid():
             priority=form.cleaned_data.get('priority')
@@ -549,19 +555,13 @@ class UserViewTasksClass(View):
                 queryset=queryset.filter(priority=priority)
             if status:
                 queryset=queryset.filter(status=status)
-
             if fdate:
                 queryset=queryset.filter(duedate__gte=fdate)
 
             if tdate:
                 queryset=queryset.filter(duedate__lte=tdate)
-            sort_by = self.request.GET.get('sort_by')
-            if sort_by == 'title':
-                queryset = queryset.order_by('title')
-            elif sort_by == 'priority':
-                queryset = queryset.order_by('priority')
 
-
+        
         return queryset
     
 
@@ -576,7 +576,7 @@ class UserViewTasksClass(View):
        
 
 
-        paginator = Paginator(tasks, 2)  
+        paginator = Paginator(tasks, 5)  
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
@@ -590,6 +590,7 @@ class UserViewTasksClass(View):
                     'description': task.description,
                     'duedate': task.duedate,
                     'status': task.status,
+                    'priority': task.priority,
                  
                 }
                 for task in tasks
@@ -598,9 +599,89 @@ class UserViewTasksClass(View):
             
 
             return JsonResponse({'tasks': filtered_tasks, 'page_number': page_obj.number, 'num_pages': paginator.num_pages})
-        return render(request, self.template_name, {'form': form, 'data': page_obj, 'fform': fform})
+        return render(request, self.template_name, {'form': form, 'data': page_obj, 'fform': fform,'pid':request.session['projectid']})
 
   
+class SortTasksView(View):
+    def get_queryset(self):
+        queryset = Task.objects.filter(PROJECT=self.request.session['projectid'], USER=Users.objects.get(LOGIN=self.request.session['lid']))
+        sort_by = self.request.GET.get('sort_by')
+        print(sort_by)
+        if sort_by == 'title_asc':
+            queryset = queryset.order_by('title')
+        elif sort_by == 'title_desc':
+            queryset = queryset.order_by('-title')
+
+        elif sort_by == 'priority_asc':
+            queryset = queryset.order_by('priority')
+
+        elif sort_by == 'priority_desc':
+            queryset = queryset.order_by('-priority')
+
+        return queryset
+
+    @method_decorator([login_required])
+    def get(self, request, *args, **kwargs):
+        tasks = self.get_queryset()
+        sorted_tasks = [
+            {
+                'id': task.id,
+                'title': task.title,
+                'description': task.description,
+                'duedate': task.duedate,
+                'status': task.status,
+                'priority': task.priority,
+            }
+            for task in tasks
+        ]
+        return JsonResponse({'tasks': sorted_tasks})
+
+
+
+
+class SortTasksViewWP(View):
+    def get_queryset(self):
+        queryset = Task.objects.filter(USER=Users.objects.get(LOGIN=self.request.session['lid']))
+        sort_by = self.request.GET.get('sort_by')
+        print(sort_by)
+        if sort_by == 'title_asc':
+            queryset = queryset.order_by('title')
+        elif sort_by == 'title_desc':
+            queryset = queryset.order_by('-title')
+
+        elif sort_by == 'priority_asc':
+            queryset = queryset.order_by('priority')
+
+        elif sort_by == 'priority_desc':
+            queryset = queryset.order_by('-priority')
+            
+        return queryset
+
+    @method_decorator([login_required])
+    def get(self, request, *args, **kwargs):
+        tasks = self.get_queryset()
+        sorted_tasks = [
+            {
+                'id': task.id,
+                'title': task.title,
+                'description': task.description,
+                'duedate': task.duedate,
+                'status': task.status,
+                'priority': task.priority,
+            }
+            for task in tasks
+        ]
+        return JsonResponse({'tasks': sorted_tasks})
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -627,10 +708,16 @@ class ViewTasksClass(View):
             if tdate:
                 queryset=queryset.filter(duedate__lte=tdate)
             sort_by = self.request.GET.get('sort_by')
-            if sort_by == 'title':
+        if sort_by:
+            if sort_by == 'title_asc':
                 queryset = queryset.order_by('title')
-            elif sort_by == 'priority':
+            elif sort_by == 'title_desc':
+                queryset = queryset.order_by('-title')
+            elif sort_by == 'priority_asc':
                 queryset = queryset.order_by('priority')
+            elif sort_by == 'priority_desc':
+                queryset = queryset.order_by('-priority')
+
 
 
         return queryset
@@ -1059,8 +1146,12 @@ class NotificationClass(View):
         from datetime import date
         today = date.today()
         tasks_due_soon = Task.objects.filter(duedate__lte=today,status='Pending',USER=Users.objects.get(LOGIN=request.session['lid']))
-            
-        return render(request, self.template_name, {'tasks_due_soon': tasks_due_soon})
+        
+        paginator = Paginator(tasks_due_soon, 5)  
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, self.template_name, {'data': page_obj})
 
 
 

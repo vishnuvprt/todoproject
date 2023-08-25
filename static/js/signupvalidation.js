@@ -41,17 +41,12 @@ $(document).ready(function() {
                 minlength: 10,
             },
 
-
-            oldpassword: {
-                required: true,
-                minlength: 8,
-            },
-            newpassword: {
+            password: {
                 required: true,
                 minlength: 8,
                 pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
             },
-            confirmpassword: {
+            cpassword: {
                 equalTo: '#yourPassword',
             },
         },
@@ -69,14 +64,12 @@ $(document).ready(function() {
                 minlength: 'Phone number must be at least 10 digits',
             },
 
-            oldpassword: {
-                minlength: 'Password must be at least 8 characters long',
-            },
-            newpassword: {
+           
+            password: {
                 minlength: 'Password must be at least 8 characters long',
                 pattern: 'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character (@$!%*?&)',
             },
-            confirmpassword: {
+            cpassword: {
                 equalTo: 'Passwords do not match',
             },
         },

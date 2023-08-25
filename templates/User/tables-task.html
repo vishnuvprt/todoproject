@@ -10,14 +10,33 @@
  <form id="task-filter-form">
   {% csrf_token %}
 
-  <div align="left" class="p-1 m-1">{{ fform.as_p }} 
-    <select id="sort-option" class="form-select-sm" name="sort_by">
-      <option value="title">Sort by Title</option>
-      <option value="priority">Sort by Priority</option>
-  </select>
+  <div align="" class="p-1 m-1">
+   
+    <label for="{{ fform.priority.id_for_label }}">Priority:</label>
+    {{ fform.priority }}
+  <label for="{{ fform.status.id_for_label }}">Status:</label>
+    {{ fform.status }}
+  <label for="{{ fform.fromdate.id_for_label }}">From:</label>
+    {{ fform.fromdate }}
+     <label for="{{ fform.todate.id_for_label }}">To:</label>
+    {{ fform.todate }}
+
+
+    
+  
    
   <button type="submit" class="btn btn-primary">Filter <i class="bi bi-search"></i></button></div>
 </form>
+
+<form id="task-sort-form" > 
+  <input type="hidden" value="{{ pid }}" id="projectid" >
+  <select id="sort-option-task" class="form-select-sm" name="sort_by">
+  <option value="">Select Sorting Option</option>
+  <option value="title_asc">Sort by Title (Ascending)</option>
+  <option value="title_desc">Sort by Title (Descending)</option>
+  <option value="priority_asc">Sort by Priority (Ascending)</option>
+  <option value="priority_desc">Sort by Priority (Descending)</option>
+  </select></form>
 
     <table class="table table-bordered table-striped table-hover " id="task-table">
     <thead>

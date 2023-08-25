@@ -1,9 +1,9 @@
 $(document).ready(function() {
-    const newPasswordInput = document.getElementById('np');
-    const confirmPasswordInput = document.getElementById('cp');
+    const newPasswordInput = document.getElementById('yourPassword');
+    const confirmPasswordInput = document.getElementById('yourCPassword');
     const saveButton = document.getElementById('saveButton');
     const pmis = document.getElementById('pmis');
-
+   
     function updateSaveButtonState() {
         const newPassword = newPasswordInput.value;
         const confirmPassword = confirmPasswordInput.value;
@@ -24,7 +24,6 @@ $(document).ready(function() {
         rules: {
             oldpassword: {
                 required: true,
-                
             },
             newpassword: {
                 required: true,
@@ -32,11 +31,10 @@ $(document).ready(function() {
                 pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
             },
             confirmpassword: {
-                equalTo: '#np',
+                equalTo: '#id_newpassword',
             },
         },
         messages: {
-         
             newpassword: {
                 minlength: 'Password must be at least 8 characters long',
                 pattern: 'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character (@$!%*?&)',

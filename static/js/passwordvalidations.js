@@ -1,40 +1,45 @@
 $(document).ready(function() {
-    const newPasswordInput = document.getElementById('yourPassword');
-    const confirmPasswordInput = document.getElementById('yourCPassword');
-    const saveButton = document.getElementById('saveButton');
-    const pmis = document.getElementById('pmis');
-   
+    var newPasswordInput = $('#yourPassword');
+    var confirmPasswordInput = $('#yourCPassword');
+    var saveButton = $('#saveButton');
+    var pmis = $('#pmis');
+    pmis.hide();
+
     function updateSaveButtonState() {
-        const newPassword = newPasswordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
+        var newPassword = newPasswordInput.val();
+        var confirmPassword = confirmPasswordInput.val();
 
         if (newPassword !== confirmPassword) {
-            pmis.style.display = 'block';
-            saveButton.disabled = true;
+            pmis.show();
+            saveButton.prop('disabled', true);
         } else {
-            pmis.style.display = 'none';
-            saveButton.disabled = false;
+            pmis.hide();
+            saveButton.prop('disabled', false);
         }
     }
 
-    newPasswordInput.addEventListener('input', updateSaveButtonState);
-    confirmPasswordInput.addEventListener('input', updateSaveButtonState);
+    newPasswordInput.on('input', updateSaveButtonState);
+    confirmPasswordInput.on('input', updateSaveButtonState);
 
     $('form[id="cpform"]').validate({
         rules: {
-            oldpassword: {
+            
+            oldpassword:{
                 required: true,
+
             },
+
             newpassword: {
                 required: true,
                 minlength: 8,
                 pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
             },
             confirmpassword: {
-                equalTo: '#id_newpassword',
+                equalTo: '#yourPassword',
             },
         },
         messages: {
+           
             newpassword: {
                 minlength: 'Password must be at least 8 characters long',
                 pattern: 'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character (@$!%*?&)',
@@ -47,4 +52,6 @@ $(document).ready(function() {
             form.submit();
         }
     });
+
+
 });

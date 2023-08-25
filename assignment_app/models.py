@@ -43,7 +43,7 @@ class Users(models.Model):
 
 
 class Project(models.Model):
-    projectname=models.CharField(max_length=20)
+    projectname=models.CharField(max_length=50)
     description=models.TextField()
     startdate=models.DateField()
     enddate=models.DateField()

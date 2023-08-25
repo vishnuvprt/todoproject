@@ -388,12 +388,12 @@ class changepassword_form(forms.Form):
 
 
 class projectFilterClass(forms.Form):
-    typeofproject=forms.ChoiceField(choices=TYPE_CHOICES,required=False,widget=forms.Select(attrs={'class': 'form-select', 'id': "typeselect"}))
-    statusofproject=forms.ChoiceField(choices=STATUS_CHOICES,required=False,widget=forms.Select(attrs={'class': 'form-select', 'id': "stsselect"})) 
+    typeofproject=forms.ChoiceField(choices=TYPE_CHOICES,required=False,widget=forms.Select(attrs={'class': 'form-select-sm', 'id': "typeselect"}))
+    statusofproject=forms.ChoiceField(choices=STATUS_CHOICES,required=False,widget=forms.Select(attrs={'class': 'form-select-sm ', 'id': "stsselect"})) 
     pfromdate=forms.DateField(
         label="From",
         widget=forms.DateInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control-sm',
             'id': 'floatingFdate',
             'type':'date'
         }),
@@ -403,7 +403,7 @@ class projectFilterClass(forms.Form):
     ptodate=forms.DateField(
         label="To",
         widget=forms.DateInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control-sm',
             'id': 'floatingTdate',
             'required': False,
             'type':'date'
@@ -467,12 +467,12 @@ class ProfilePhotoUploadForm(forms.Form):
 
 
 class FilterTaskForm(forms.Form):
-    priority=forms.ChoiceField(choices=PRIORITY_CHOICES,required=False,widget=forms.Select(attrs={'class': 'form-select', 'id': "prioritychoice"})) 
-    status=forms.ChoiceField(choices=STATUS_CHOICES,required=False,widget=forms.Select(attrs={'class': 'form-select', 'id': "statuschoice"})) 
+    priority=forms.ChoiceField(choices=PRIORITY_CHOICES,required=False,widget=forms.Select(attrs={'class': 'form-select-sm', 'id': "prioritychoice"})) 
+    status=forms.ChoiceField(choices=STATUS_CHOICES,required=False,widget=forms.Select(attrs={'class': 'form-select-sm', 'id': "statuschoice"})) 
     fromdate=forms.DateField(
         label="From",
         widget=forms.DateInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control-sm',
             'id': 'fromdate',
             'type':'date'
         }),
@@ -483,13 +483,17 @@ class FilterTaskForm(forms.Form):
     todate=forms.DateField(
         label="TO",
         widget=forms.DateInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control-sm',
             'id': 'todate',
             'type':'date'
         }),
         required=False  
 
     )
+
+
+
+
 
 
 class StaffFilterForm(forms.Form):

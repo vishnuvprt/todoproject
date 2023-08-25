@@ -1,23 +1,3 @@
-const showAddFormLink = document.getElementById('showAddFormLink');
-const addFormModal = new bootstrap.Modal(document.getElementById('addFormModal'));
-const editFormModal = new bootstrap.Modal(document.getElementById('editFormModal'));
-
-showAddFormLink.addEventListener('click', () => {
-    addFormModal.show();
-});
-
-const editBtns = document.querySelectorAll('.edit-btn');
-editBtns.forEach(btn => {
-    btn.addEventListener('click', (event) => {
-        const projectId = btn.getAttribute('data-project-id');
-        // Fetch project details using AJAX and populate the edit form fields
-
-        // Show the edit form modal
-        editFormModal.show();
-    });
-});
-
-
 
 //  duration calculator  
 
@@ -42,14 +22,6 @@ if (!isNaN(startDate) && !isNaN(endDate)) {
 }
 });
 
-
-const showTaskAddFormLink = document.getElementById('addTaskFormModal');
-const addTaskFormModal = new bootstrap.Modal(document.getElementById('addTaskModal'));
-
-
-showTaskAddFormLink.addEventListener('click', () => {
-    addTaskFormModal.show();
-});
 
 
 
