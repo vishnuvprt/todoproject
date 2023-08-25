@@ -319,15 +319,30 @@ $('#AddTask').off('click').on('click', function(event) {
     const formData = new FormData($('#AddTaskForm')[0]);  // Convert the form to FormData
 
     var c=1;
+    var status;
     $.ajax({
         url: '/myapp/usertasks/',
         method: 'POST',
         headers: { 'X-CSRFToken': csrfToken }, 
         data:formData,
         dataType: 'json',
-        processData: false,  // Prevent jQuery from processing the data
-        contentType: false,  // Prevent jQuery from setting contentType
+        processData: false, 
+        contentType: false,  
         success: function(data) {
+
+            if(data.priority=='High'){
+                status='<span class="badge bg-danger"><i class="bi circle "></i>'+data.priority+'</span>'
+            }
+            else if(data.priority=='Medium'){
+                status='<span class="badge bg-primary"><i class="bi circle "></i>'+data.priority+'</span>'
+            }
+            else{
+
+                status='<span class="badge bg-success"><i class="bi circle "></i>'+data.priority+'</span>'
+
+            }
+
+
             console.log(data); 
             alert(data.message);
             setTimeout(function() {
@@ -340,7 +355,7 @@ $('#AddTask').off('click').on('click', function(event) {
                 <td>${data.title}</td>
                 <td>${data.description}</td>
                 <td>${data.duedate}</td>
-                <td><span class="badge bg-danger">High </span></td>
+                <td>${status}</td>
                 <td><a href="#" class="btn btn-primary edit-task-btn" data-task-id="${data.id}"><i class="bi-pencil"></i></a></td>
                 <td><a href="#" class="btn btn-danger" data-task-id="${data.id}"><i class="bi-trash"></i></a></td>
                 <td><a href="/myapp/subtask/${data.id}" class="btn btn-primary">Subtask <i class="bi-list-task"></i></a></td>

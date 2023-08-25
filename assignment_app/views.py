@@ -749,6 +749,7 @@ class ViewTasksClass(View):
                     'description': task.description,
                     'duedate': task.duedate,
                     'status': task.status,
+                    'priority': task.priority,
                  
                 }
                 for task in tasks
@@ -788,7 +789,8 @@ class ViewTasksClass(View):
                     return JsonResponse({'message': 'Task added successfully', 'id': tobj.id,
                     'title': title,
                     'description': description,
-                    'duedate': duedate
+                    'duedate': duedate,
+                    'priority': priority,
                     })
                 else:
                     status='Project '+pobj.status
