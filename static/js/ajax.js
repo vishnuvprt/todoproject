@@ -24,7 +24,7 @@ $(document).ready(function() {
                 '</tr>';
 
                 $('#projects-table tbody').append(newRow);
-                $('#addFormModal').modal('hide');
+                // $('#addFormModal').modal('hide');
 
 
                 
@@ -150,10 +150,10 @@ $(document).ready(function() {
                 editedRow.find('td:eq(4)').html('<a href="#" class="btn btn-primary edit-btn" data-bs-toggle="modal" data-bs-target="#editFormModal" data-project-id="'+response.project_id+'"> <i class="bi bi-pencil"></i></a>');
                 editedRow.find('td:eq(5)').html('<a href="#" class="btn btn-danger delete-button" id="delete" yy="'+response.project_id+'"> <i class="bi bi-trash"></i></a>');
                 console.log("Updatfinish");
-                setTimeout(function() {
+                // setTimeout(function() {
 
-                    $('#editFormModal').modal('hide');
-                }, 500);
+                //     $('#editFormModal').modal('hide');
+                // }, 500);
             },
             error: function(xhr, status, error) {
             console.log(xhr.status);
@@ -304,10 +304,15 @@ $('#TaskFormBtn').off('click').on('click', function(event) {
         success: function(data) {
             console.log(data); 
             alert(data.message);
-            setTimeout(function() {
-                $('#addTaskModal').modal('hide');
-            }, 500);
-            
+            // setTimeout(function() {
+            //     $('#addTaskModal').modal('hide');
+            // }, 500);
+            submitButton.prop('disabled', false);
+
+            $('#addTaskModal').on('hidden.bs.modal', function () {
+                $(this).off('hidden.bs.modal'); 
+                location.reload();  
+            }).modal('hide');
            
 
         },
