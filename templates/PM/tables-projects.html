@@ -3,7 +3,6 @@
 
 
 
-
           <!-- Table with stripped rows -->
           <div align="right" class="p-1 m-1"><a href="#" id="showAddFormLink" class="btn btn-primary">Add New<i class="bi bi-plus"></i></a></div>
           <form method="get" id="filter-form" action="{% url 'projects' %}">
@@ -115,6 +114,7 @@
                       <div class="form-floating">
                           {{ form.pname }}
                         <label for="{{ form.pname.id_for_label }}">Project Name</label>
+                        <span class="text-danger" id="projectNameError"></span> <!-- Add this line -->
                       </div>
                     </div>
                       <div class="col-12">
@@ -191,7 +191,9 @@
                       <div class="form-floating">
                           {{ eform.pname }}
                         <label for="{{ eform.pname.id_for_label }}">Project Name</label>
-                      </div>
+                        <div id="pname-error" class="error-message"></div>
+       
+                           </div>
                     </div>
                       <div class="col-12">
                       <div class="form-floating">

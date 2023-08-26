@@ -1,6 +1,7 @@
 import re
 from django import forms
 from .models import *
+from django.core.validators import MinLengthValidator
 
 
 
@@ -50,7 +51,10 @@ class login_form(forms.Form):
 
 class SignupForm(forms.Form):
     name = forms.CharField(
+
         label="Your Name",
+        max_length=20,
+        validators=[MinLengthValidator(limit_value=3, message="Field must have at least 3 characters.")],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'id': 'yourName',
@@ -127,6 +131,8 @@ class SignupForm(forms.Form):
 class new_project_form(forms.Form):
     pname = forms.CharField(
         label="Project Name",
+        max_length=50,
+        validators=[MinLengthValidator(limit_value=3, message="Field must have at least 3 characters.")],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'id': 'floatingName',
@@ -182,6 +188,8 @@ class new_project_form(forms.Form):
 class edit_project_form(forms.Form):
     pname = forms.CharField(
         label="Project Name",
+        max_length=50,
+        validators=[MinLengthValidator(limit_value=3, message="Field must have at least 3 characters.")],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'id': 'floatingName',
@@ -241,6 +249,8 @@ class edit_project_form(forms.Form):
 class add_task_form(forms.Form):
     title = forms.CharField(
         label="Title",
+        max_length=20,
+        validators=[MinLengthValidator(limit_value=3, message="Field must have at least 3 characters.")],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'id': 'floatingTitle',
@@ -275,6 +285,8 @@ class add_task_form(forms.Form):
 class edit_task_form(forms.Form):
     title = forms.CharField(
         label="Title",
+        max_length=20,
+        validators=[MinLengthValidator(limit_value=3, message="Field must have at least 3 characters.")],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'id': 'floatingName',
@@ -312,6 +324,8 @@ class edit_task_form(forms.Form):
 class add_subtask_form(forms.Form):
     title = forms.CharField(
         label="Title",
+        max_length=50,
+        validators=[MinLengthValidator(limit_value=3, message="Field must have at least 3 characters.")],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'id': 'floatingName',
@@ -326,6 +340,8 @@ class add_subtask_form(forms.Form):
 class edit_subtask_form(forms.Form):
     title = forms.CharField(
         label="Title",
+        max_length=50,
+        validators=[MinLengthValidator(limit_value=3, message="Field must have at least 3 characters.")],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'id': 'floatingName',
@@ -516,6 +532,8 @@ class add_task_form_2(forms.Form):
 
     title = forms.CharField(
         label="Title",
+        max_length=20,
+        validators=[MinLengthValidator(limit_value=3, message="Field must have at least 3 characters.")],
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'id': 'floatingTitle',

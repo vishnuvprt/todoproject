@@ -59,7 +59,9 @@
         </th>
         <td>{{ i.title }}</td>
         <td>{{ i.description }}</td>
-        <td>{{ i.duedate }}    </td>
+        <td>{{ i.duedate }} 
+        
+        </td>
         <td>{% if i.priority == 'High' %}<span class="badge bg-danger">High </span>
           {% elif i.priority == 'Medium'  %} <span class="badge bg-primary">Medium </span> {% else %} <span class="badge bg-success">Low </span> {% endif %}
          </td>

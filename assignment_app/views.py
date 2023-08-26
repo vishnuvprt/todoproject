@@ -1,3 +1,4 @@
+
 from functools import wraps
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, JsonResponse
@@ -171,7 +172,7 @@ class Project_Class(View):
         paginator = Paginator(projects, 5)  
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-
+        
 
 
         if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
@@ -225,6 +226,7 @@ class Project_Class(View):
                     
                     })
             else:
+                print(form.errors,"new error")
                 errors = form.errors.as_json()
                 return JsonResponse({'errors': errors}, status=400)
         else:
@@ -368,6 +370,7 @@ class EditProject_Class(View):
             else:
                 errors = form.errors.as_json()
                 print(errors,"errrrrrrrr")
+                print(form.errors,"new error")
                 return JsonResponse({'errors': errors}, status=400)
         else:
             return HttpResponse("<script>alert('something went wrong!');history.back();</script>")
@@ -736,8 +739,8 @@ class ViewTasksClass(View):
         paginator = Paginator(tasks, 5)  
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-
-
+        
+        
         
         if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             filtered_tasks = [
@@ -1002,6 +1005,7 @@ class UserProfileClass(View):
 
 
 class EditProfileClass(View):
+    template_name='User/users-profile.html'
     @method_decorator([login_required])
     def post(self, request,*args, **kwargs):
         if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':

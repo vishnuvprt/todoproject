@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    
     $('#addform').submit(function(event) {
         event.preventDefault();
         
@@ -91,15 +92,14 @@ $(document).ready(function() {
                 }
 
 
-
-
-
-
                 $('#editFormModal').modal('show'); 
 
 
             },
             error: function(xhr, status, error) {
+
+                
+
                 console.error('Error fetching project data:', error);
             }
         });
@@ -121,7 +121,7 @@ $(document).ready(function() {
                 count++;
                 console.log("Updated project"+count);
                 var editedRow = $('#projects-table').find('tr[data-project-id="' + projectIdr + '"]');
-                editedRow.find('td:eq(0)').html(response.projectname);
+                editedRow.find('td:eq(0)').html('<a href="/myapp/projectteam/'+projectIdr+'">'+response.projectname+'</a>');
                 editedRow.find('td:eq(1)').html(response.description);
                 editedRow.find('td:eq(2)').html(response.startdate + ' to ' + response.enddate + '<br>' + response.duration);
                 if(response.status=='Completed'){
@@ -156,7 +156,17 @@ $(document).ready(function() {
                 }, 500);
             },
             error: function(xhr, status, error) {
+            console.log(xhr.status);
+            if (xhr.status === 400) {
+                    var errors = xhr.responseJSON.errors;
+                    console.log(errors);
+            for (var field in errors) {
+                var errorMessages = Array.isArray(errors[field]) ? errors[field].join('<br>') : errors[field];
+                $('#' + field + '-error').html(errorMessages);
+            }
+            } else {
                 console.error('Error editing project data:', error);
+            }               
             }
         });
     });
