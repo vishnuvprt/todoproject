@@ -64,7 +64,7 @@
           {% elif i.priority == 'Medium'  %} <span class="badge bg-primary">Medium </span> {% else %} <span class="badge bg-success">Low </span> {% endif %}
          </td>
         <td><a href="#" id="edit-task-btn" class="btn btn-primary edit-task-btn" data-task-id="{{ i.id }}" > <i class="bi-pencil"></i></a></td>
-        <td><a href="#" id="deletetask" class="btn btn-danger" data-task-id="{{ i.id }}" > <i class="bi-trash"></i></a></td>
+        <td><a href="#" id="deletetask" class="btn btn-danger delete-task-btn" data-task-id="{{ i.id }}" > <i class="bi-trash"></i></a></td>
         <td><a href="{% url 'subtask' i.id %}" id="showAddFormLink" class="btn btn-primary">Subtask <i class="bi-list-task"></i></a></td>
       </tr>
       {% endfor %}

@@ -940,12 +940,14 @@ class AddSubTask(View):
             if form.is_valid():
                 title=form.cleaned_data['title']
                 uid=Users.objects.get(LOGIN=request.session['lid'])
+                sobj=Subtask.objects.filter(TASK_id=request.session['taskid']).count()
                 tobj=Subtask.objects.create(title=title,TASK_id=request.session['taskid'])
                 log_user_action(uid,"New Sub Task added")
-
+                sobj +=1
                 return JsonResponse({'message':'ok','title': title,
                     'status': 'pending',
-                    'id': tobj.id 
+                    'id': tobj.id,
+                    'slno':sobj
                     })
 
                 
@@ -1125,14 +1127,18 @@ class GetProfilePhotoView(View):
 class GetReminderStatus(View):
     @method_decorator([login_required])
     def get(self, request, *args, **kwargs):
-        user = request.session['lid']
+        user_login = request.session['lid']
         try:
-            rs = ReminderSetting.objects.get(USER=Users.objects.get(LOGIN=user))
-            rss = rs.status
-        except ReminderSetting.DoesNotExist:
-            rss = 'On'
+            user = Users.objects.get(LOGIN=user_login)
+            try:
+                reminder_setting = ReminderSetting.objects.get(USER=user)
+                reminder_status = reminder_setting.status
+            except ReminderSetting.DoesNotExist:
+                reminder_status = 'Off' 
+        except Users.DoesNotExist:
+            reminder_status = 'Off'  
         
-        return JsonResponse({'rs': rss})
+        return JsonResponse({'rs': reminder_status})
 
 class UpdateReminderStatus(View):
     @method_decorator([login_required])

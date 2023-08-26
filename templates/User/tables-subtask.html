@@ -22,7 +22,7 @@
         <td>{{ i.title }}</td>
         <td>{{ i.status }}</td>
         <td><a href="#" id="showEditsubtaskFormLink" class="btn btn-primary edit-subtask-btn" data-subtask-id="{{ i.id }}" > <i class="bi-pencil"></i></a></td>
-        <td><a href="#" id="deletesubtask" class="btn btn-danger" data-subtask-id="{{ i.id }}" > <i class="bi-trash"></i></a></td>
+        <td><a href="#" id="deletesubtask" class="btn btn-danger delete-subtask-btn" data-subtask-id="{{ i.id }}" > <i class="bi-trash"></i></a></td>
       </tr>
 
       {% endfor %}

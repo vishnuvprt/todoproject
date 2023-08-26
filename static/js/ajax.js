@@ -483,7 +483,7 @@ $('#addSubTaskSubmit').off('click').on('click', function(event) {
     event.preventDefault();
 
     const csrfToken = $('input[name="csrfmiddlewaretoken"]').val();  
-
+   
     $.ajax({
         url: '/myapp/addsubtask/',
         method: 'POST',
@@ -499,7 +499,7 @@ $('#addSubTaskSubmit').off('click').on('click', function(event) {
             }, 500);
 
             var newRow = '<tr>' +
-            '<th scope="row"><a href="#">...</a></th>' +
+            '<th scope="row"><a href="#">' + data.slno +'</a></th>' +
             '<td>' + data.title + '</td>' +
             '<td>' + data.status + '</td>' +
             '<td><a href="#" id="showEditsubtaskFormLink" class="btn btn-primary edit-subtask-btn" data-subtask-id="'+data.id+'" > <i class="bi-pencil"></i></a></td>' +
@@ -595,7 +595,7 @@ $('#EditSubTaskSubmit').off('click').on('click', function(event) {
 });
 
 
-$('#deletesubtask').off('click').on('click', function(event)  {
+$(document).on('click', '.delete-subtask-btn', function(event) {
     event.preventDefault();
     const taskidId = $(this).data('subtask-id');
     var confirmDelete = confirm('Are you sure you want to delete this subtask?');
@@ -625,7 +625,8 @@ $('#deletesubtask').off('click').on('click', function(event)  {
 
 
 
-$('#deletetask').off('click').on('click', function(event)  {
+ $(document).on('click', '.delete-task-btn', function(event) {
+    
     event.preventDefault();
     const taskidId = $(this).data('task-id');
     var confirmDelete = confirm('Are you sure you want to delete this task?');
