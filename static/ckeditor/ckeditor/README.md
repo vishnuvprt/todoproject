@@ -1,13 +1,8 @@
 CKEditor 4
 ==========
 
-<<<<<<< HEAD
 Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
 https://ckeditor.com - See LICENSE.md for license information.
-=======
-Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
-https://ckeditor.com - See https://ckeditor.com/legal/ckeditor-oss-license for license information.
->>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 
 CKEditor 4 is a text editor to be used inside web pages. It's not a replacement
 for desktop text editors like Word or OpenOffice, but a component to be used as

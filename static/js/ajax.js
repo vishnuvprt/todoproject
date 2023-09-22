@@ -57,7 +57,7 @@ $(document).ready(function() {
             method: 'GET',
             dataType: 'json',
             success: function(response) {
-                var editor = CKEDITOR.instances.description;
+                var editor = CKEDITOR.instances['edit_project_dec'];
                 editor.setData(response.description);
                 $('#editFormModal #floatingName').val(response.projectname);
                 // $('#editFormModal #floatingTextarea').val(response.description);
@@ -111,8 +111,8 @@ $(document).ready(function() {
    
     $('#editFormSubmit').off('click').on('click', function(event) {
         event.preventDefault();
-        const editor = CKEDITOR.instances.description;
-        const descriptionTextArea = $('#description'); 
+        const editor = CKEDITOR.instances['edit_project_dec'];
+        const descriptionTextArea = $('#edit_project_dec'); 
         descriptionTextArea.val(editor.getData());
         var count=0;
         $.ajax({
@@ -301,8 +301,8 @@ $('#TaskFormBtn').off('click').on('click', function(event) {
 
     const csrfToken = $('input[name="csrfmiddlewaretoken"]').val();  
 
-    const editor = CKEDITOR.instances['id_description']; 
-    const descriptionTextArea = $('#id_description'); 
+    const editor = CKEDITOR.instances['add_ask_desc']; 
+    const descriptionTextArea = $('#add_ask_desc'); 
     descriptionTextArea.val(editor.getData());
 
     $.ajax({
@@ -341,10 +341,10 @@ $('#AddTask').off('click').on('click', function(event) {
     event.preventDefault();
 
     const csrfToken = $('input[name="csrfmiddlewaretoken"]').val();  
-     // Get the CKEditor instance and update the textarea content
-     const editor = CKEDITOR.instances['id_description'];
-     const descriptionTextArea = $('#id_description');
-     descriptionTextArea.val(editor.getData());
+    
+    const editor = CKEDITOR.instances['id_description']; 
+    const descriptionTextArea = $('#id_description'); 
+    descriptionTextArea.val(editor.getData());
  
      // Get the values for each field
      const titleValue = $('#floatingTitle').val();
@@ -435,7 +435,7 @@ editTaskBtns.forEach(btn => {
         method: 'GET',
         dataType: 'json',
         success: function(response) {
-            var editor = CKEDITOR.instances.description_field;
+            var editor = CKEDITOR.instances['edit_task_desc'];
             editor.setData(response.description);
             $('#EditTaskFormModal #floatingName').val(response.title);
             $('#EditTaskFormModal #floatingSdate').val(response.duedate);
@@ -478,8 +478,8 @@ editTaskBtns.forEach(btn => {
 $('#EditTaskSubmit').off('click').on('click', function(event) {
     event.preventDefault();
 
-    const editor = CKEDITOR.instances.description_field;
-    const descriptionTextArea = $('#description_field'); 
+    const editor = CKEDITOR.instances['edit_task_desc'];
+    const descriptionTextArea = $('#edit_task_desc'); 
     descriptionTextArea.val(editor.getData());
     var status;
     $.ajax({
@@ -1028,7 +1028,7 @@ $('#sort-option').on('change', function() {
                         <td>${i.title}</td>
                         <td>${i.description}</td>
                         <td>${i.duedate}</td>
-                        <td>${pp}</td>
+                        <td>${pp}</td>  
                         <td><a href="#" class="btn btn-primary edit-task-btn" data-task-id="${i.id}"><i class="bi-pencil"></i></a></td>
                         <td><a href="#" class="btn btn-danger" data-task-id="${i.id}"><i class="bi-trash"></i></a></td>
                         <td><a href="/myapp/subtask/${i.id}" class="btn btn-primary">Subtask <i class="bi-list-task"></i></a></td>

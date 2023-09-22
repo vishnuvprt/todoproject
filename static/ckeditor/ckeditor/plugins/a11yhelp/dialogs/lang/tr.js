@@ -1,9 +1,5 @@
 ﻿/*
-<<<<<<< HEAD
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
-=======
- Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
->>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang("a11yhelp","tr",{title:"Erişilebilirlik Talimatları",contents:"Yardım içeriği. Bu pencereyi kapatmak için ESC tuşuna basın.",legend:[{name:"Genel",items:[{name:"Düzenleyici Araç Çubuğu",legend:"Araç çubuğunda gezinmek için ${toolbarFocus} basın. TAB ve SHIFT+TAB ile önceki ve sonraki araç çubuğu grubuna taşıyın. SAĞ OK veya SOL OK ile önceki ve sonraki bir araç çubuğu düğmesini hareket ettirin. SPACE tuşuna basın veya araç çubuğu düğmesini etkinleştirmek için ENTER tuşna basın."},

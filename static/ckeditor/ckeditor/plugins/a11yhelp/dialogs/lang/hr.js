@@ -1,9 +1,5 @@
 ﻿/*
-<<<<<<< HEAD
  Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
-=======
- Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
->>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
  For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang("a11yhelp","hr",{title:"Upute dostupnosti",contents:"Sadržaj pomoći. Za zatvaranje pritisnite ESC.",legend:[{name:"Općenito",items:[{name:"Alatna traka",legend:"Pritisni ${toolbarFocus} za navigaciju do alatne trake. Pomicanje do prethodne ili sljedeće alatne grupe vrši se pomoću SHIFT+TAB i TAB. Pomicanje do prethodnog ili sljedećeg gumba u alatnoj traci vrši se pomoću lijeve i desne strelice kursora. Pritisnite SPACE ili ENTER za aktivaciju alatne trake."},{name:"Dijalog",

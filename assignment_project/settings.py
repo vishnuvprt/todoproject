@@ -39,10 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'assignment_app.apps.AssignmentAppConfig',
     'ckeditor',
+    'rest_framework',
     'ckeditor_uploader',
     'debug_toolbar',
    
-
 ]
 
 MIDDLEWARE = [
@@ -53,9 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-
 
 ]
 
@@ -82,9 +80,7 @@ TEMPLATES = [
                 'assignment_app.notificationcount.totalnoticount',
                 'assignment_app.photoandname.pandn',
                 'assignment_app.photoandname.sonoff',
-
                 
-
             ],
         },
     },
@@ -148,7 +144,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.history.HistoryPanel',
     'debug_toolbar.panels.versions.VersionsPanel',
@@ -165,7 +160,6 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.redirects.RedirectsPanel',
     'debug_toolbar.panels.profiling.ProfilingPanel',
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -191,7 +185,6 @@ STATIC_ROOT  = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
 
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
@@ -224,7 +217,6 @@ INTERNAL_IPS = [
 
 AUTH_USER_MODEL = 'assignment_app.Users'
 # LOGIN_URL = 'first/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

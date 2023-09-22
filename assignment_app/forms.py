@@ -143,14 +143,7 @@ class new_project_form(forms.Form):
             'placeholder':'Project Name'
         }),
     )
-    description = forms.CharField(
-        widget=CKEditorWidget(
-            attrs={
-                'id': 'description_field',  # Change the ID as needed
-            }
-        ),
-        required=True,
-    )#forms.CharField(widget=CKEditorUploadingWidget,required=True)#forms.CharField(label="Description",widget=forms.Textarea(attrs={'class': 'form-control','id': 'floatingTextarea','required': True,'placeholder': 'Description'}),)
+    description =forms.CharField(widget=CKEditorUploadingWidget,required=True)#forms.CharField(label="Description",widget=forms.Textarea(attrs={'class': 'form-control','id': 'floatingTextarea','required': True,'placeholder': 'Description'}),)
     startdate = forms.DateField(
         label="Start Date",
         widget=forms.DateInput(attrs={
@@ -199,14 +192,7 @@ class edit_project_form(forms.Form):
             'placeholder':'Project Name'
         }),
     )
-    description = forms.CharField(
-        widget=CKEditorWidget(
-            attrs={
-                'id': 'description',  # Change the ID as needed
-            }
-        ),
-        required=True,
-    )   #forms.CharField(widget=CKEditorUploadingWidget,required=True) #forms.CharField(label="Description",widget=forms.Textarea(attrs={ 'class': 'form-control','id': 'floatingTextarea','required': True,'placeholder': 'Description'}),)
+    description = forms.CharField( widget=CKEditorUploadingWidget(attrs={'id': 'edit_project_dec'}),required=True) #forms.CharField(label="Description",widget=forms.Textarea(attrs={ 'class': 'form-control','id': 'floatingTextarea','required': True,'placeholder': 'Description'}),)
     startdate = forms.DateField(
         label="Start Date",
         widget=forms.DateInput(attrs={
@@ -259,7 +245,7 @@ class add_task_form(forms.Form):
             'placeholder':'Title'
         }),
     )
-    description =forms.CharField(widget=CKEditorUploadingWidget,required=True)
+    description =forms.CharField( widget=CKEditorUploadingWidget(attrs={'id': 'add_ask_desc'}),required=True)
     #  forms.CharField(
     #     label="Description",
     #     widget=forms.Textarea(attrs={
@@ -296,14 +282,7 @@ class edit_task_form(forms.Form):
             'placeholder':'Title'
         }),
     )
-    description = forms.CharField(
-        widget=CKEditorWidget(
-            attrs={
-                'id': 'description_field',  # Change the ID as needed
-            }
-        ),
-        required=True,
-    )#forms.CharField(widget=CKEditorUploadingWidget,required=True)
+    description = forms.CharField( widget=CKEditorUploadingWidget(attrs={'id': 'edit_task_desc'}),required=True)
     # forms.CharField(
     #     label="Description",
     #     widget=forms.Textarea(attrs={
