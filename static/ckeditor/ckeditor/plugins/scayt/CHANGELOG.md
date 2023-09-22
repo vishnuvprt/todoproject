@@ -1,5 +1,6 @@
 SCAYT plugin for CKEditor 4 Changelog
 ====================
+<<<<<<< HEAD
 ### CKEditor 4.5.6
 
 New Features:
@@ -18,3 +19,7 @@ Fixed issues:
 * SCAYT stops working when CKEditor Undo plug-in not enabled
 * Issue with pasting SCAYT markup in CKEditor
 * [#32](https://github.com/WebSpellChecker/ckeditor-plugin-wsc/issues/32) SCAYT stops working after pressing Cancel button in WSC dialog
+=======
+
+The full changelog of the SCAYT plugin for CKEditor 4 can be found on our website under the [release notes](https://webspellchecker.com/release-notes/) section.
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9

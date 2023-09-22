@@ -2,7 +2,11 @@ $(document).ready(function() {
     
     $('#addform').submit(function(event) {
         event.preventDefault();
+<<<<<<< HEAD
         var form = $(this); 
+=======
+        
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         $.ajax({
             url: '/myapp/projects/',
             type: 'POST',
@@ -12,7 +16,10 @@ $(document).ready(function() {
 
 
                 alert('New Project Added!');
+<<<<<<< HEAD
                 form.trigger('reset');
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                 
                 var newRow = '<tr>' +
                 '<th scope="row">'+response.slno+'</th>' +
@@ -34,8 +41,12 @@ $(document).ready(function() {
                 if (xhr.status === 400) {
                     var errors = JSON.parse(xhr.responseText).errors;
                 } else {
+<<<<<<< HEAD
                   alert('Something Went wrong');                   
                  }
+=======
+                  alert('Something Went wrong');                    }
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
             }
         });
     });
@@ -297,10 +308,13 @@ $('#TaskFormBtn').off('click').on('click', function(event) {
 
     const csrfToken = $('input[name="csrfmiddlewaretoken"]').val();  
 
+<<<<<<< HEAD
     const editor = CKEDITOR.instances['id_description']; 
     const descriptionTextArea = $('#id_description'); 
     descriptionTextArea.val(editor.getData());
 
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
     $.ajax({
         url: '/myapp/userassignedprojects/'+projectId+'/add/',
         method: 'POST',
@@ -313,12 +327,21 @@ $('#TaskFormBtn').off('click').on('click', function(event) {
             // setTimeout(function() {
             //     $('#addTaskModal').modal('hide');
             // }, 500);
+<<<<<<< HEAD
             // submitButton.prop('disabled', false);
 
             // $('#addTaskModal').on('hidden.bs.modal', function () {
             //     $(this).off('hidden.bs.modal'); 
             //     location.reload();  
             // }).modal('hide');
+=======
+            submitButton.prop('disabled', false);
+
+            $('#addTaskModal').on('hidden.bs.modal', function () {
+                $(this).off('hidden.bs.modal'); 
+                location.reload();  
+            }).modal('hide');
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
            
 
         },
@@ -337,6 +360,7 @@ $('#AddTask').off('click').on('click', function(event) {
     event.preventDefault();
 
     const csrfToken = $('input[name="csrfmiddlewaretoken"]').val();  
+<<<<<<< HEAD
      // Get the CKEditor instance and update the textarea content
      const editor = CKEDITOR.instances['id_description'];
      const descriptionTextArea = $('#id_description');
@@ -359,6 +383,9 @@ $('#AddTask').off('click').on('click', function(event) {
          project: projectValue
      };
      console.log({'formdata':formData});
+=======
+    const formData = new FormData($('#AddTaskForm')[0]);  // Convert the form to FormData
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 
     var c=1;
     var status;
@@ -368,6 +395,7 @@ $('#AddTask').off('click').on('click', function(event) {
         headers: { 'X-CSRFToken': csrfToken }, 
         data:formData,
         dataType: 'json',
+<<<<<<< HEAD
         // processData: false, 
         // contentType: false,  
         success: function(data) {
@@ -381,22 +409,51 @@ $('#AddTask').off('click').on('click', function(event) {
             else{
 
                 status='<span class="badge bg-success">Low </span>'
+=======
+        processData: false, 
+        contentType: false,  
+        success: function(data) {
+
+            if(data.priority=='High'){
+                status='<span class="badge bg-danger"><i class="bi circle "></i>'+data.priority+'</span>'
+            }
+            else if(data.priority=='Medium'){
+                status='<span class="badge bg-primary"><i class="bi circle "></i>'+data.priority+'</span>'
+            }
+            else{
+
+                status='<span class="badge bg-success"><i class="bi circle "></i>'+data.priority+'</span>'
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 
             }
 
 
             console.log(data); 
             alert(data.message);
+<<<<<<< HEAD
             location.reload(true); 
             
             const newRow = `
             <tr data-task-id="${data.id}" >
                 <td><a href="#">${data.tcount}</a></td>
+=======
+            setTimeout(function() {
+                $('#addTaskModal').modal('hide');
+            }, 500);
+    
+            const newRow = `
+            <tr data-task-id="${data.id}">
+                <td><a href="#">${data.id}</a></td>
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                 <td>${data.title}</td>
                 <td>${data.description}</td>
                 <td>${data.duedate}</td>
                 <td>${status}</td>
+<<<<<<< HEAD
                 <td><a href="#" id="edit-task-btn" class="btn btn-primary edit-task-btn" data-task-id="${data.id}" > <i class="bi-pencil"></i></a></td>
+=======
+                <td><a href="#" class="btn btn-primary edit-task-btn" data-task-id="${data.id}"><i class="bi-pencil"></i></a></td>
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                 <td><a href="#" class="btn btn-danger" data-task-id="${data.id}"><i class="bi-trash"></i></a></td>
                 <td><a href="/myapp/subtask/${data.id}" class="btn btn-primary">Subtask <i class="bi-list-task"></i></a></td>
             </tr>`;
@@ -431,9 +488,15 @@ editTaskBtns.forEach(btn => {
         method: 'GET',
         dataType: 'json',
         success: function(response) {
+<<<<<<< HEAD
             var editor = CKEDITOR.instances.description_field;
             editor.setData(response.description);
             $('#EditTaskFormModal #floatingName').val(response.title);
+=======
+            
+            $('#EditTaskFormModal #floatingName').val(response.title);
+            $('#EditTaskFormModal #floatingTextarea').val(response.description);
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
             $('#EditTaskFormModal #floatingSdate').val(response.duedate);
             var priority = response.priority;
             taskidr=taskidId;
@@ -473,11 +536,14 @@ editTaskBtns.forEach(btn => {
 
 $('#EditTaskSubmit').off('click').on('click', function(event) {
     event.preventDefault();
+<<<<<<< HEAD
 
     const editor = CKEDITOR.instances.description_field;
     const descriptionTextArea = $('#description_field'); 
     descriptionTextArea.val(editor.getData());
     var status;
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
     $.ajax({
         url: '/myapp/userviewtasks/' + taskidr + '/edit/', 
         method: 'POST',
@@ -491,6 +557,7 @@ $('#EditTaskSubmit').off('click').on('click', function(event) {
             editedRow.find('td:eq(0)').html(response.title);
             editedRow.find('td:eq(1)').html(response.description);
             editedRow.find('td:eq(2)').html(response.duedate);
+<<<<<<< HEAD
 
             if(response.priority=='High'){
                 status='<span class="badge bg-danger"><i class="bi circle "></i>'+response.priority+'</span>'
@@ -511,6 +578,16 @@ $('#EditTaskSubmit').off('click').on('click', function(event) {
             // setTimeout(function() {
             //     $('#EditTaskFormModal').modal('hide');
             // }, 500);
+=======
+            editedRow.find('td:eq(3)').html('<a href="#" id="edit-task-btn" class="btn btn-primary edit-task-btn" data-task-id="'+response.taskid+'" ><i class="bi-pencil"></i></a>');
+            editedRow.find('td:eq(4)').html('<a href="#" id="deletetask" class="btn btn-danger" data-task-id="'+response.taskid+'" > <i class="bi-trash"></i></a>');
+            editedRow.find('td:eq(5)').html('<a href="#" id="showAddFormLink" class="btn btn-primary">Subtask <i class="bi-list-task"></i></a>');
+            console.log("Updatfinish");
+           
+            setTimeout(function() {
+                $('#EditTaskFormModal').modal('hide');
+            }, 500);
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         },
         error: function(xhr, status, error) {
             console.error('Error editing task data:', error);
@@ -621,7 +698,10 @@ editSubTaskBtns.forEach(btn => {
 
 $('#EditSubTaskSubmit').off('click').on('click', function(event) {
     event.preventDefault();
+<<<<<<< HEAD
     
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
     $.ajax({
         url: '/myapp/subtask/' + subtaskidr + '/edit/', 
         method: 'POST',
@@ -1042,7 +1122,10 @@ $('#sort-option').on('change', function() {
 
 $('#sort-option-task').on('change', function() {
     var sortOption = $(this).val();
+<<<<<<< HEAD
     var serialNumber = 1;
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
     $.ajax({
         type: 'GET',
         url: `/myapp/usertasks/sort`, // Use the correct URL path
@@ -1063,7 +1146,11 @@ $('#sort-option-task').on('change', function() {
 
                 const newRow = `
                     <tr>
+<<<<<<< HEAD
                         <td>${serialNumber}</td>
+=======
+                        <td>...</td>
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                         <td>${i.title}</td>
                         <td>${i.description}</td>
                         <td>${i.duedate}</td>
@@ -1072,7 +1159,10 @@ $('#sort-option-task').on('change', function() {
                         <td><a href="#" class="btn btn-danger" data-task-id="${i.id}"><i class="bi-trash"></i></a></td>
                         <td><a href="/myapp/subtask/${i.id}" class="btn btn-primary">Subtask <i class="bi-list-task"></i></a></td>
                     </tr>`;
+<<<<<<< HEAD
                     serialNumber++;
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                 taskTableUser.append(newRow);
             });
         },

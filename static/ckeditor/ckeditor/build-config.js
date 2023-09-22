@@ -1,6 +1,11 @@
 ﻿/**
+<<<<<<< HEAD
  * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/license
+=======
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license/
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
  */
 
 /**
@@ -13,10 +18,17 @@
  * (1) https://ckeditor.com/cke4/builder
  *     Visit online builder to build CKEditor from scratch.
  *
+<<<<<<< HEAD
  * (2) https://ckeditor.com/cke4/builder/4e3a4ca28d8cb0c407b480601a63d4b6
  *     Visit online builder to build CKEditor, starting with the same setup as before.
  *
  * (3) https://ckeditor.com/cke4/builder/download/4e3a4ca28d8cb0c407b480601a63d4b6
+=======
+ * (2) https://ckeditor.com/cke4/builder/6490967e78ab135a44d8c0998d90e841
+ *     Visit online builder to build CKEditor, starting with the same setup as before.
+ *
+ * (3) https://ckeditor.com/cke4/builder/download/6490967e78ab135a44d8c0998d90e841
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
  *     Straight download link to the latest version of CKEditor (Optimized) with the same setup as before.
  *
  * NOTE:
@@ -39,6 +51,10 @@ var CKBUILDER_CONFIG = {
 		'.jshintrc',
 		'.mailmap',
 		'.npm',
+<<<<<<< HEAD
+=======
+		'.nvmrc',
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 		'.travis.yml',
 		'bender-err.log',
 		'bender-out.log',
@@ -48,6 +64,10 @@ var CKBUILDER_CONFIG = {
 		'gruntfile.js',
 		'less',
 		'node_modules',
+<<<<<<< HEAD
+=======
+		'package-lock.json',
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 		'package.json',
 		'tests'
 	],
@@ -64,12 +84,22 @@ var CKBUILDER_CONFIG = {
 		'copyformatting' : 1,
 		'dialogadvtab' : 1,
 		'div' : 1,
+<<<<<<< HEAD
 		'elementspath' : 1,
 		'enterkey' : 1,
 		'entities' : 1,
 		'filebrowser' : 1,
 		'find' : 1,
 		'flash' : 1,
+=======
+		'editorplaceholder' : 1,
+		'elementspath' : 1,
+		'enterkey' : 1,
+		'entities' : 1,
+		'exportpdf' : 1,
+		'filebrowser' : 1,
+		'find' : 1,
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 		'floatingspace' : 1,
 		'font' : 1,
 		'format' : 1,
@@ -90,9 +120,15 @@ var CKBUILDER_CONFIG = {
 		'newpage' : 1,
 		'pagebreak' : 1,
 		'pastefromgdocs' : 1,
+<<<<<<< HEAD
 		'pastefromword' : 1,
 		'pastetext' : 1,
 		'pastetools' : 1,
+=======
+		'pastefromlibreoffice' : 1,
+		'pastefromword' : 1,
+		'pastetext' : 1,
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 		'preview' : 1,
 		'print' : 1,
 		'removeformat' : 1,
@@ -114,7 +150,10 @@ var CKBUILDER_CONFIG = {
 		'toolbar' : 1,
 		'undo' : 1,
 		'uploadimage' : 1,
+<<<<<<< HEAD
 		'wsc' : 1,
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 		'wysiwygarea' : 1
 	},
 	languages : {

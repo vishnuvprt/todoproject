@@ -2,7 +2,11 @@
 from functools import wraps
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, JsonResponse
+<<<<<<< HEAD
 from django.shortcuts import redirect, render,get_object_or_404
+=======
+from django.shortcuts import redirect, render
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 # Create your views here.
 from django.utils import timezone
 from django.views import View
@@ -13,9 +17,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.decorators import method_decorator
 from .utils import log_user_action
 from django.core.serializers import serialize
+<<<<<<< HEAD
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password,BasePasswordHasher,check_password
 from django.contrib.auth import update_session_auth_hash
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 
 
 
@@ -48,6 +55,7 @@ class Login_Class(View):
         form = login_form()
         return render(request, self.template_name, {'form': form})
 
+<<<<<<< HEAD
     def post(self, request, *args, **kwargs):
         form = login_form(request.POST)
         if form.is_valid():
@@ -68,6 +76,29 @@ class Login_Class(View):
                 print(e)
                 return render(request, self.template_name, {'form': form, 'Error': 'No user found'})
         else:
+=======
+    def post(self,request,*args,**kwargs):
+        form=login_form(request.POST)
+        if form.is_valid():
+            uname=form.cleaned_data['username']
+            password=form.cleaned_data['password']
+            try:
+                lobj=Login.objects.get(email=uname,password=password)
+                if lobj.type=='admin':
+                    request.session['lid']=lobj.id
+
+                    return HttpResponse("<script>alert('Welcome Admin');window.location='/myapp/admindashboard/'</script>")
+                else:
+                    request.session['lid'] = lobj.id
+                    uid=Users.objects.get(LOGIN=lobj)
+                    log_user_action(uid,'Logged In')
+                    return HttpResponse("<script>alert('Welcome User');window.location='/myapp/userdashboard/'</script>")
+            except Exception as e:
+                print(e)
+                return render(request, self.template_name, {'form': form,'Error':'No user found'})
+        else:
+
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
             return render(request, self.template_name, {'form': form})
 
 
@@ -86,8 +117,14 @@ class SignupClass(View):
             email = form.cleaned_data['email']
             phone = form.cleaned_data['phone']
             password = form.cleaned_data['password']
+<<<<<<< HEAD
             hashed_password = make_password(password)
             uobj = Users.objects.create(name=name, email=email, phone=phone,password=hashed_password)
+=======
+
+            lobj = Login.objects.create(email=email, password=password, type='user')
+            uobj = Users.objects.create(LOGIN=lobj, name=name, email=email, phone=phone)
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
             log_user_action(uobj,'New user signed up' )
             return HttpResponse("<script>alert('Account Created');window.location='/myapp/first/'</script>")
         else:
@@ -109,18 +146,28 @@ class ChangePasswordAdmin(View):
             oldp=form.cleaned_data['oldpassword']
             newp=form.cleaned_data['newpassword']
             confp=form.cleaned_data['confirmpassword']
+<<<<<<< HEAD
             hashed_password = make_password(newp)
             holdp=make_password(oldp)
             print(holdp,"============")
             try:
                 lobj= Users.objects.get(password=holdp,pk=request.session['lid'])  #Login.objects.get(password=oldp,pk=request.session['lid'])
                 lobj.password=hashed_password
+=======
+            try:
+                lobj=Login.objects.get(password=oldp,pk=request.session['lid'])
+                lobj.password=newp
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                 lobj.save()
                 return HttpResponse("<script>alert('Password Changed');window.location='/myapp/first/'</script>")
 
             except Exception as e:
 
+<<<<<<< HEAD
                 return render(request, "PM/change-password.html", {'form': form,'Error':'Please check your old password'})
+=======
+                return render(request, "PM/change-password.html", {'form': form,'Error':'User not found'})
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         else:
             print(form.errors)
             return render(request, "PM/change-password.html", {'form': form,'Error':form.errors})
@@ -147,7 +194,11 @@ class UserDashboardClass(View):
     def get(self, request, *args, **kwargs):
 
         import datetime
+<<<<<<< HEAD
         lobj=Logs.objects.filter(USER=request.user).order_by('-timestamp')
+=======
+        lobj=Logs.objects.filter(USER=Users.objects.get(LOGIN=request.session['lid'])).order_by('-timestamp')
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 
         return render(request, self.template_name,{'data':lobj})
 
@@ -246,7 +297,11 @@ class UserViewAssignedProjects(View):
 
     form_class=projectFilterClass
     def get_queryset(self):
+<<<<<<< HEAD
         queryset = ProjectTeams.objects.filter(USER=self.request.user)
+=======
+        queryset = ProjectTeams.objects.filter(USER=Users.objects.get(LOGIN=self.request.session['lid']))
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         fform = self.form_class(self.request.GET)
         
         if fform.is_valid():
@@ -420,7 +475,11 @@ class StaffsClass(View):
     form_class = StaffFilterForm
 
     def get_queryset(self, name):
+<<<<<<< HEAD
         return Users.objects.select_related().filter(name__icontains=name)
+=======
+        return Users.objects.filter(name__icontains=name)
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
     def get(self, request, *args, **kwargs):
         form = self.form_class(request.GET)
         persons = []
@@ -488,6 +547,7 @@ class ChangePasswordUser(View):
             oldp=form.cleaned_data['oldpassword']
             newp=form.cleaned_data['newpassword']
             confp=form.cleaned_data['confirmpassword']
+<<<<<<< HEAD
             user = Users.objects.get(pk=request.session['lid'])
             hashed_old_password = user.password
             try:
@@ -506,11 +566,24 @@ class ChangePasswordUser(View):
                     log_user_action(user, 'Logged Out')
 
             
+=======
+            try:
+                lobj=Login.objects.get(password=oldp,pk=request.session['lid'])
+                lobj.password=newp
+                lobj.save()
+                uid=Users.objects.get(LOGIN=request.session['lid'])
+                log_user_action(uid,'Password Changed')
+                log_user_action(uid,'Logged Out')
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                 return HttpResponse("<script>alert('Password Changed');window.location='/myapp/first/'</script>")
 
             except Exception as e:
                 print(e)
+<<<<<<< HEAD
                 return render(request, "User/change-password.html", {'form': form,'Error':'Please check your old password'})
+=======
+                return render(request, "User/change-password.html", {'form': form,'Error':'User not found'})
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         else:
             return render(request, "User/change-password.html", {'form': form})
 
@@ -531,7 +604,11 @@ class AddnewTaskClass(View):
                 description=form.cleaned_data['description']
                 duedate=form.cleaned_data['duedate']
                 priority=form.cleaned_data['priority']
+<<<<<<< HEAD
                 uid=request.user
+=======
+                uid=Users.objects.get(LOGIN=request.session['lid'])
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                 print(projectid,"ooooooo")
                 pobj=Project.objects.get(pk=projectid)
                 if pobj.status not in ['Completed','Onhold','Cancel']:
@@ -560,7 +637,11 @@ class UserViewTasksClass(View):
     template_name="User/tables-data.html"
     form_class=FilterTaskForm
     def get_queryset(self):
+<<<<<<< HEAD
         queryset= Task.objects.filter(PROJECT=self.request.session['projectid'], USER=self.request.user)
+=======
+        queryset= Task.objects.filter(PROJECT=self.request.session['projectid'], USER=Users.objects.get(LOGIN=self.request.session['lid']))
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         form=self.form_class(self.request.GET)
         if form.is_valid():
             priority=form.cleaned_data.get('priority')
@@ -620,7 +701,11 @@ class UserViewTasksClass(View):
   
 class SortTasksView(View):
     def get_queryset(self):
+<<<<<<< HEAD
         queryset = Task.objects.filter(PROJECT=self.request.session['projectid'], USER=self.request.user)
+=======
+        queryset = Task.objects.filter(PROJECT=self.request.session['projectid'], USER=Users.objects.get(LOGIN=self.request.session['lid']))
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         sort_by = self.request.GET.get('sort_by')
         print(sort_by)
         if sort_by == 'title_asc':
@@ -657,7 +742,11 @@ class SortTasksView(View):
 
 class SortTasksViewWP(View):
     def get_queryset(self):
+<<<<<<< HEAD
         queryset = Task.objects.filter(USER=self.request.user)
+=======
+        queryset = Task.objects.filter(USER=Users.objects.get(LOGIN=self.request.session['lid']))
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         sort_by = self.request.GET.get('sort_by')
         print(sort_by)
         if sort_by == 'title_asc':
@@ -676,7 +765,10 @@ class SortTasksViewWP(View):
     @method_decorator([login_required])
     def get(self, request, *args, **kwargs):
         tasks = self.get_queryset()
+<<<<<<< HEAD
         
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         sorted_tasks = [
             {
                 'id': task.id,
@@ -706,7 +798,11 @@ class ViewTasksClass(View):
     template_name="User/tables-task.html"
     form_class=FilterTaskForm
     def get_queryset(self):
+<<<<<<< HEAD
         queryset= Task.objects.filter(USER=self.request.user)
+=======
+        queryset= Task.objects.filter(USER=Users.objects.get(LOGIN=self.request.session['lid']))
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         print(queryset,"dataaaaaaaa")
         form=self.form_class(self.request.GET)
         if form.is_valid():
@@ -744,7 +840,11 @@ class ViewTasksClass(View):
     @method_decorator([login_required])
     def get(self, request, *args, **kwargs):
         form = edit_task_form()
+<<<<<<< HEAD
         user = request.user
+=======
+        user = Users.objects.get(LOGIN=request.session['lid'])
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         addtaskform = add_task_form_2(user)
         tasks=self.get_queryset()
         fform=self.form_class(self.request.GET)
@@ -779,7 +879,11 @@ class ViewTasksClass(View):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
+<<<<<<< HEAD
         uid = self.request.user
+=======
+        uid = Users.objects.get(LOGIN=request.session['lid'])
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             form = add_task_form_2(uid, request.POST)
             if form.is_valid():
@@ -796,20 +900,30 @@ class ViewTasksClass(View):
                     return JsonResponse({'error': 'Invalid project value'})
                 pobj=Project.objects.get(pk=projectid)
                 if pobj.status not in ['Completed','Onhold','Cancel']:
+<<<<<<< HEAD
                     tcount=Task.objects.filter(USER=uid).count()
+=======
+
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                     tobj = Task.objects.create(
                         title=title, description=description, duedate=duedate,
                         priority=priority, USER=uid, PROJECT_id=projectid
                     )
                 # Assuming log_user_action is defined elsewhere
                     log_user_action(uid, "New Task added")
+<<<<<<< HEAD
                     tcount+=1
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                     return JsonResponse({'message': 'Task added successfully', 'id': tobj.id,
                     'title': title,
                     'description': description,
                     'duedate': duedate,
                     'priority': priority,
+<<<<<<< HEAD
                     'tcount':tcount,
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                     })
                 else:
                     status='Project '+pobj.status
@@ -877,7 +991,11 @@ class EditTaskClass(View):
                     'priority': tobj.priority,
                     'status': tobj.status,
                     }
+<<<<<<< HEAD
                     uid=self.request.user
+=======
+                    uid=Users.objects.get(LOGIN=request.session['lid'])
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                     log_user_action(uid,"Task Updated")
                     return JsonResponse(uptaskdata)
                 except Project.DoesNotExist:
@@ -936,7 +1054,11 @@ class SubTaskEditClass(View):
                     'taskid': tobj.id,
                     'status': tobj.status,
                     }
+<<<<<<< HEAD
                     uid=self.request.user
+=======
+                    uid=Users.objects.get(LOGIN=request.session['lid'])
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                     log_user_action(uid,"Subtask Updated")
                     return JsonResponse(uptaskdata)
                 except Project.DoesNotExist:
@@ -960,7 +1082,11 @@ class AddSubTask(View):
             form = add_subtask_form(request.POST)
             if form.is_valid():
                 title=form.cleaned_data['title']
+<<<<<<< HEAD
                 uid=self.request.user
+=======
+                uid=Users.objects.get(LOGIN=request.session['lid'])
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                 sobj=Subtask.objects.filter(TASK_id=request.session['taskid']).count()
                 tobj=Subtask.objects.create(title=title,TASK_id=request.session['taskid'])
                 log_user_action(uid,"New Sub Task added")
@@ -985,7 +1111,11 @@ class DeleteSubtask(View):
     def get(self,request,subtaskid,*args,**kwargs ):
         sobj=Subtask.objects.get(pk=subtaskid)
         sobj.delete()
+<<<<<<< HEAD
         uid=self.request.user
+=======
+        uid=Users.objects.get(LOGIN=request.session['lid'])
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         log_user_action(uid,"Subtask deleted")
         return JsonResponse({'message':'deleted'})
 
@@ -994,7 +1124,11 @@ class Deletetask(View):
     def get(self,request,taskid,*args,**kwargs ):
         sobj=Task.objects.get(pk=taskid)
         sobj.delete()
+<<<<<<< HEAD
         uid=self.request.user
+=======
+        uid=Users.objects.get(LOGIN=request.session['lid'])
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         log_user_action(uid,"Task deleted")
         return JsonResponse({'message':'deleted'})
 
@@ -1013,10 +1147,17 @@ class UserProfileClass(View):
     @method_decorator([login_required])
     def get(self,request,*args,**kwargs):
         
+<<<<<<< HEAD
         eform=editprofileform()
         rform=SettingsForm()
         user=Users.objects.get(pk=request.session['lid'])
         return render(request,self.template_name,{'data':user,'eform':eform,'rform':rform})
+=======
+        uobj=Users.objects.get(LOGIN=request.session['lid'])
+        eform=editprofileform()
+        rform=SettingsForm()
+        return render(request,self.template_name,{'data':uobj,'eform':eform,'rform':rform})
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 
 
 
@@ -1033,7 +1174,11 @@ class EditProfileClass(View):
                 job=form.cleaned_data['job']
                 phone=form.cleaned_data['phone']
                 
+<<<<<<< HEAD
                 uid=Users.objects.get(pk=request.session['lid'])
+=======
+                uid=Users.objects.get(LOGIN=request.session['lid'])
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                 uid.name=name
                 uid.type=job
                 uid.phone=phone
@@ -1066,8 +1211,13 @@ class ProfileDataClass(View):
 
         try:
 
+<<<<<<< HEAD
             uobj = Users.objects.get(pk=request.session['lid'])
             
+=======
+            uobj = Users.objects.get(LOGIN=request.session['lid'])
+
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
             if uobj.photo:  # Check if the photo field is not None
                 photo = uobj.photo.url
             else:
@@ -1097,8 +1247,14 @@ class UserProfileView(View):
     template_name = 'User/users-profile.html'
     @method_decorator([login_required])
     def get(self, request, *args, **kwargs):
+<<<<<<< HEAD
         try:
             user_profile = Users.objects.get(pk=request.session['lid'])
+=======
+        user = request.session['lid']
+        try:
+            user_profile = Users.objects.get(LOGIN=user)
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         except Users.DoesNotExist:
             user_profile = None
 
@@ -1115,8 +1271,14 @@ class UploadProfilePhotoView(View):
         form = ProfilePhotoUploadForm(request.POST, request.FILES)
         if form.is_valid():
             profile_image = form.cleaned_data['profile_image']
+<<<<<<< HEAD
             try:
                 user_profile = Users.objects.get(pk=request.session['lid'])
+=======
+            user =  request.session['lid']
+            try:
+                user_profile = Users.objects.get(LOGIN=user)
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
                 user_profile.photo = profile_image
                 user_profile.save()
                 log_user_action(user_profile,'Profile photo updated')
@@ -1133,8 +1295,14 @@ class UploadProfilePhotoView(View):
 class GetProfilePhotoView(View):
     @method_decorator([login_required])
     def get(self, request, *args, **kwargs):
+<<<<<<< HEAD
         try:
             user_profile = Users.objects.get(pk=request.session['lid'])
+=======
+        user = request.session['lid']
+        try:
+            user_profile = Users.objects.get(LOGIN=user)
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
             photo_url = user_profile.photo.url if user_profile.photo  else '/static/assets/img/20230814095643.jpg'
             print(photo_url)
             return JsonResponse({'photo': photo_url})
@@ -1146,8 +1314,14 @@ class GetProfilePhotoView(View):
 class GetReminderStatus(View):
     @method_decorator([login_required])
     def get(self, request, *args, **kwargs):
+<<<<<<< HEAD
         try:
             user = Users.objects.get(pk=request.session['lid'])
+=======
+        user_login = request.session['lid']
+        try:
+            user = Users.objects.get(LOGIN=user_login)
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
             try:
                 reminder_setting = ReminderSetting.objects.get(USER=user)
                 reminder_status = reminder_setting.status
@@ -1165,11 +1339,19 @@ class UpdateReminderStatus(View):
         status = request.POST.get('status')  # Assuming you send the status from AJAX
         
         try:
+<<<<<<< HEAD
             rs = ReminderSetting.objects.get(USER=user)
             rs.status = status
             rs.save()
         except ReminderSetting.DoesNotExist:
             ReminderSetting.objects.create(USER=user, status=status)
+=======
+            rs = ReminderSetting.objects.get(USER=Users.objects.get(LOGIN=user))
+            rs.status = status
+            rs.save()
+        except ReminderSetting.DoesNotExist:
+            ReminderSetting.objects.create(USER=Users.objects.get(LOGIN=user), status=status)
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         
         return JsonResponse({'status': 'updated'})
 
@@ -1183,7 +1365,11 @@ class RemoveProfilePhotoView(View):
     @method_decorator([login_required])
     def post(self, request, *args, **kwargs):
         try:
+<<<<<<< HEAD
             user = Users.objects.get(pk=request.session['lid'])
+=======
+            user = Users.objects.get(LOGIN=request.session['lid'])
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
             if user.photo:
                 user.photo.delete()  # Remove the photo file from storage
                 user.photo = None    # Set the photo field to None
@@ -1202,7 +1388,11 @@ class NotificationClass(View):
     def get(self, request, *args, **kwargs):
         from datetime import date
         today = date.today()
+<<<<<<< HEAD
         tasks_due_soon = Task.objects.filter(duedate__lte=today,status='Pending',USER=Users.objects.get(pk=request.session['lid']))
+=======
+        tasks_due_soon = Task.objects.filter(duedate__lte=today,status='Pending',USER=Users.objects.get(LOGIN=request.session['lid']))
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         
         paginator = Paginator(tasks_due_soon, 5)  
         page_number = request.GET.get('page')
@@ -1254,7 +1444,11 @@ class LogoutClass(View):
 
 class UserLogoutClass(View):
     def get(self,request,*args,**kwargs):
+<<<<<<< HEAD
         uid=self.request.user
+=======
+        uid=Users.objects.get(LOGIN=request.session['lid'])
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         log_user_action(uid,'Logged Out')
         request.session['lid']='None'
         return redirect('/myapp/first/')

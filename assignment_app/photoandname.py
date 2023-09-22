@@ -8,8 +8,13 @@ def pandn(request):
     if lid is not None:
         try:
             
+<<<<<<< HEAD
             name = Users.objects.get(pk=lid).name
             photo = Users.objects.get(pk=lid).photo
+=======
+            name = Users.objects.get(LOGIN=lid).name
+            photo = Users.objects.get(LOGIN=lid).photo
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 
         except (Users.DoesNotExist, ValueError):
             pass
@@ -25,7 +30,11 @@ def sonoff(request):
 
     if lid is not None:
         try:
+<<<<<<< HEAD
             user = Users.objects.get(pk=lid)
+=======
+            user = Users.objects.get(LOGIN=lid)
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
             rem=ReminderSetting.objects.filter(USER=user)
             if rem is not None:
                 reminder_setting = ReminderSetting.objects.get(USER=user)

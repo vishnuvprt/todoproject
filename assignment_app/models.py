@@ -1,6 +1,9 @@
 from django.db import models
 from django.core.validators import RegexValidator
+<<<<<<< HEAD
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 
 
 
@@ -29,6 +32,7 @@ PRIORITY_CHOICES = (
 
 
 
+<<<<<<< HEAD
 # class Login(models.Model):
 #     email=models.EmailField(max_length=254,unique=True)
 #     password = models.CharField(max_length=20)
@@ -80,6 +84,20 @@ class Users(AbstractBaseUser, PermissionsMixin):
 #     email=models.EmailField(max_length=254,unique=True)
 #     type=models.CharField(max_length=100,null=True,default='None')
 
+=======
+class Login(models.Model):
+    email=models.EmailField(max_length=254,unique=True)
+    password = models.CharField(max_length=20)
+    type = models.CharField(max_length=20,default='user')
+
+class Users(models.Model):
+    LOGIN=models.ForeignKey(Login,on_delete=models.CASCADE)
+    name=models.CharField(max_length=20)
+    phone = models.BigIntegerField(null=False,default=0)
+    photo=models.ImageField(upload_to='media/',null=True,default='None')
+    email=models.EmailField(max_length=254,unique=True)
+    type=models.CharField(max_length=100,null=True,default='None')
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 
 
 class Project(models.Model):

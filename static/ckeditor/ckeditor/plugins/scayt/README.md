@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 SCAYT Plugin for CKEditor 4
+=======
+SCAYT plugin for CKEditor 4
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 =====================
 
 SpellCheckAsYouType (SCAYT) instantly underlines spelling and grammar errors while users type. To correct spelling or grammar error, a user simply needs to right-click the marked word to select from suggested corrections.
@@ -16,14 +20,22 @@ Demo
 ------------
 SCAYT plugin for CKEditor 4: https://webspellchecker.com/wsc-scayt-ckeditor4/
 
+<<<<<<< HEAD
 Supported Languages
+=======
+Supported languages
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 ------------
 
 The SCAYT plugin for CKEditor as a part of the free services supports the next languages for check spelling: American English, British English, Canadian English, Canadian French, Danish, Dutch, Finnish, French, German, Greek, Italian, Norwegian Bokmal, Spanish, Swedish.
 
 There are also additional languages and specialized dictionaries available for a commercial license, you can check the full list [here](https://webspellchecker.com/additional-dictionaries/).
 
+<<<<<<< HEAD
 Get Started
+=======
+Get started
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 ------------
 
 1. Clone/copy this repository contents in a new "plugins/scayt" folder in your CKEditor installation.
@@ -33,7 +45,11 @@ Get Started
 
 That's all. SCAYT will appear on the editor toolbar under the ABC button and will be ready to use.
 
+<<<<<<< HEAD
 Supported Browsers
+=======
+Supported browsers
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 -------
 
 This is the list of officially supported browsers for the SCAYT plugin for CKEditor 4. SCAYT may also work in other browsers and environments but we unable to check all of them and guarantee proper work.
@@ -57,7 +73,11 @@ Resources
 * CKEditor’s How-Tos for SCAYT: https://ckeditor.com/docs/ckeditor4/latest/guide/dev_howtos_scayt.html
 * CKEditor’s example of SCAYT: https://ckeditor.com/docs/ckeditor4/latest/examples/spellchecker.html
 
+<<<<<<< HEAD
 Technical Support or Questions
+=======
+Technical support or questions
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 -------
 
 In cooperation with the CKEditor team, during the past 10 years we have simplified the installation and built the extensive amount of documentation devoted to SCAYT plugin for CKEditor 4 and less.
@@ -66,7 +86,11 @@ If you are experiencing any difficulties with the setup of the plugin, please ch
 
 Holders of an active subscription to the services or a commercial license have access to professional technical assistance directly from the WebSpellChecker team. [Contact us here](https://webspellchecker.com/contact-us/)!
 
+<<<<<<< HEAD
 Reporting Issues
+=======
+Reporting issues
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 -------
 
 Please use the [SCAYT plugin for CKEditor 4 GitHub issue page](https://github.com/WebSpellChecker/ckeditor-plugin-scayt/issues) to report bugs and feature requests. We will do our best to reply at our earliest convenience.

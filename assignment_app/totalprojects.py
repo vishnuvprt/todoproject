@@ -26,7 +26,11 @@ def total_projects_user(request):
     
     if lid is not None:
         try:
+<<<<<<< HEAD
             uid = Users.objects.get(pk=lid)
+=======
+            uid = Users.objects.get(LOGIN_id=lid)
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
             totalp = ProjectTeams.objects.filter(USER=uid).count()
         except (Users.DoesNotExist, ValueError):
             pass  
@@ -40,7 +44,11 @@ def finished_tasks(request):
     
     if lid is not None:
         try:
+<<<<<<< HEAD
             uid = Users.objects.get(pk=lid)
+=======
+            uid = Users.objects.get(LOGIN_id=lid)
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
             totalp = Task.objects.filter(USER=uid, status='Completed').count()
         except (Users.DoesNotExist, ValueError):
             pass  
@@ -54,7 +62,11 @@ def Ongoing_tasks(request):
     
     if lid is not None:
         try:
+<<<<<<< HEAD
             uid = Users.objects.get(pk=lid)
+=======
+            uid = Users.objects.get(LOGIN_id=lid)
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
             totalp = Task.objects.filter(USER=uid, status='Ongoing').count()
         except (Users.DoesNotExist, ValueError):
             pass  

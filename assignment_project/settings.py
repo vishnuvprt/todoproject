@@ -39,10 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'assignment_app.apps.AssignmentAppConfig',
     'ckeditor',
+<<<<<<< HEAD
     'rest_framework',
     'ckeditor_uploader',
     'debug_toolbar',
    
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 ]
 
 MIDDLEWARE = [
@@ -53,8 +56,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+<<<<<<< HEAD
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 ]
 
 ROOT_URLCONF = 'assignment_project.urls'
@@ -80,7 +86,10 @@ TEMPLATES = [
                 'assignment_app.notificationcount.totalnoticount',
                 'assignment_app.photoandname.pandn',
                 'assignment_app.photoandname.sonoff',
+<<<<<<< HEAD
                 
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
             ],
         },
     },
@@ -144,6 +153,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+<<<<<<< HEAD
 DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.history.HistoryPanel',
     'debug_toolbar.panels.versions.VersionsPanel',
@@ -161,6 +171,8 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.profiling.ProfilingPanel',
 ]
 
+=======
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -187,6 +199,7 @@ MEDIA_URL='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
+<<<<<<< HEAD
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 CKEDITOR_UPLOAD_PATH = "ckeditor/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
@@ -217,6 +230,9 @@ INTERNAL_IPS = [
 
 AUTH_USER_MODEL = 'assignment_app.Users'
 # LOGIN_URL = 'first/'
+=======
+
+>>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
