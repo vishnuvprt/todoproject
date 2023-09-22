@@ -2,12 +2,9 @@ import re
 from django import forms
 from .models import *
 from django.core.validators import MinLengthValidator
-<<<<<<< HEAD
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from ckeditor.widgets import CKEditorWidget
 
-=======
->>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 
 
 
@@ -146,19 +143,7 @@ class new_project_form(forms.Form):
             'placeholder':'Project Name'
         }),
     )
-<<<<<<< HEAD
     description = forms.CharField(widget=CKEditorUploadingWidget,required=True)#forms.CharField(label="Description",widget=forms.Textarea(attrs={'class': 'form-control','id': 'floatingTextarea','required': True,'placeholder': 'Description'}),)
-=======
-    description = forms.CharField(
-        label="Description",
-        widget=forms.Textarea(attrs={
-            'class': 'form-control',
-            'id': 'floatingTextarea',
-            'required': True,
-            'placeholder': 'Description'
-        }),
-    )
->>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
     startdate = forms.DateField(
         label="Start Date",
         widget=forms.DateInput(attrs={
@@ -189,11 +174,7 @@ class new_project_form(forms.Form):
         }),
     )
     project_type = forms.ChoiceField(choices=TYPE_CHOICES, widget=forms.Select(attrs={'class': 'form-select','id':"floatingSelect"}))
-<<<<<<< HEAD
     user_field = forms.ModelMultipleChoiceField(queryset=Users.objects.select_related().exclude(is_superuser=True), label="Select User",widget=forms.SelectMultiple(attrs={'class': 'form-select', 'id': 'userField'}),required=True)
-=======
-    user_field = forms.ModelMultipleChoiceField(queryset=Users.objects.all(), label="Select User",widget=forms.SelectMultiple(attrs={'class': 'form-select', 'id': 'userField'}),required=True)
->>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 
 
 
@@ -211,19 +192,7 @@ class edit_project_form(forms.Form):
             'placeholder':'Project Name'
         }),
     )
-<<<<<<< HEAD
     description =forms.CharField(widget=CKEditorUploadingWidget,required=True) #forms.CharField(label="Description",widget=forms.Textarea(attrs={ 'class': 'form-control','id': 'floatingTextarea','required': True,'placeholder': 'Description'}),)
-=======
-    description = forms.CharField(
-        label="Description",
-        widget=forms.Textarea(attrs={
-            'class': 'form-control',
-            'id': 'floatingTextarea',
-            'required': True,
-            'placeholder': 'Description'
-        }),
-    )
->>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
     startdate = forms.DateField(
         label="Start Date",
         widget=forms.DateInput(attrs={
@@ -243,11 +212,7 @@ class edit_project_form(forms.Form):
         }),
     )
     duration = forms.CharField(
-<<<<<<< HEAD
         label="Duration",
-=======
-        label="Description",
->>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'id': 'floatingDuration',
@@ -280,7 +245,6 @@ class add_task_form(forms.Form):
             'placeholder':'Title'
         }),
     )
-<<<<<<< HEAD
     description =forms.CharField(widget=CKEditorUploadingWidget,required=True)
     #  forms.CharField(
     #     label="Description",
@@ -291,17 +255,6 @@ class add_task_form(forms.Form):
     #         'placeholder': 'Description'
     #     }),
     # )
-=======
-    description = forms.CharField(
-        label="Description",
-        widget=forms.Textarea(attrs={
-            'class': 'form-control',
-            'id': 'floatingDescription',
-            'required': True,
-            'placeholder': 'Description'
-        }),
-    )
->>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
     duedate = forms.DateField(
         label="Due Date",
         widget=forms.DateInput(attrs={
@@ -330,7 +283,6 @@ class edit_task_form(forms.Form):
         }),
     )
     description = forms.CharField(
-<<<<<<< HEAD
         widget=CKEditorWidget(
             attrs={
                 'id': 'description_field',  # Change the ID as needed
@@ -347,16 +299,6 @@ class edit_task_form(forms.Form):
     #         'placeholder': 'Description'
     #     }),
     # )
-=======
-        label="Description",
-        widget=forms.Textarea(attrs={
-            'class': 'form-control',
-            'id': 'floatingTextarea',
-            'required': True,
-            'placeholder': 'Description'
-        }),
-    )
->>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
     duedate = forms.DateField(
         label="Due Date",
         widget=forms.DateInput(attrs={
@@ -595,7 +537,6 @@ class add_task_form_2(forms.Form):
             'placeholder':'Title'
         }),
     )
-<<<<<<< HEAD
     description = forms.CharField(widget=CKEditorUploadingWidget,required=True)
     # forms.CharField(
     #     label="Description",
@@ -606,17 +547,6 @@ class add_task_form_2(forms.Form):
     #         'placeholder': 'Description'
     #     }),
     # )
-=======
-    description = forms.CharField(
-        label="Description",
-        widget=forms.Textarea(attrs={
-            'class': 'form-control',
-            'id': 'floatingDescription',
-            'required': True,
-            'placeholder': 'Description'
-        }),
-    )
->>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
     duedate = forms.DateField(
         label="Due Date",
         widget=forms.DateInput(attrs={
