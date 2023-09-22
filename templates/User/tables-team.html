@@ -1,0 +1,93 @@
+{% extends 'User/index.html' %}
+{% block body %}
+
+<body>
+
+          <!-- Table with stripped rows -->
+               <table class="table table-bordered table-striped table-hover datatable">
+                <thead>
+                <tr align="right"><th colspan="5"><a href="#" id="showAddFormLink" class="btn btn-primary">Update<i class="bi bi-pencil"></i></a></th></tr>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Type</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><a href="#">#2457</a></th>
+                    <td>Brandon Jacob</td>
+                    <td>Brandon Jacob</td>
+
+                  </tr>
+
+                </tbody>
+              </table>
+          <!-- End Table with stripped rows -->
+
+
+
+
+ <!-- Floating form for add project -->
+
+    <div class="modal fade" id="addFormModal" tabindex="-1" aria-labelledby="addFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="formModalLabel">Project Form</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+                  <!-- Floating Labels Form -->
+                  <form class="row g-3" method="post" action="">
+                      {% csrf_token %}
+
+                    <div class="col-md-12">
+                      <div class="form mb-3">
+                          <label for="floatingSelect">Members</label>
+                        <select class="form-select" multiple aria-label="multiple select example" >
+                          <option selected>New York</option>
+                          <option value="1" >Oregon</option>
+                          <option value="2">DC</option>
+                        </select>
+
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+                  </form><!-- End floating Labels Form -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+<script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const showAddFormLink = document.getElementById('showAddFormLink');
+        const addFormModal = new bootstrap.Modal(document.getElementById('addFormModal'));
+
+        showAddFormLink.addEventListener('click', () => {
+            addFormModal.show();
+        });
+
+
+
+
+
+    </script>
+
+
+ <!-- End Floating form for edit team -->
+
+
+
+</body>
+{% endblock %}

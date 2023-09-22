@@ -1,0 +1,150 @@
+{% extends 'User/index.html' %}
+{% block body %}
+
+<body>
+
+ <!-- Table with stripped rows -->
+    <table class="table table-bordered table-striped table-hover " id="subtasktable">
+    <thead>
+    <tr align="right"><th colspan="5"><a href="#" id="showSubTaskAddFormLink" class="btn btn-primary">Add Task <i class="bi-plus"></i></a></th></tr>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Status</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in data %}
+      <tr data-subtask-id="{{ i.id }}">
+        <th scope="row" data-sl-no="{{ forloop.counter }}"><a href="#">{{ forloop.counter }}</a></th>
+        <td>{{ i.title }}</td>
+        <td>{{ i.status }}</td>
+        <td><a href="#" id="showEditsubtaskFormLink" class="btn btn-primary edit-subtask-btn" data-subtask-id="{{ i.id }}" > <i class="bi-pencil"></i></a></td>
+        <td><a href="#" id="deletesubtask" class="btn btn-danger delete-subtask-btn" data-subtask-id="{{ i.id }}" > <i class="bi-trash"></i></a></td>
+      </tr>
+
+      {% endfor %}
+
+
+    </tbody>
+    </table>
+    <!-- End Table with stripped rows -->
+
+
+
+
+
+
+
+ <!-- Floating form for add subtask -->
+
+    <div class="modal fade" id="addSubTaskFormModal" tabindex="-1" aria-labelledby="addSubTaskFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="formModalLabel">Add Sub Task</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+                  <!-- Floating Labels Form -->
+                     <form class="row g-3" method="post" id="addSubTaskForm" action="">
+                      {% csrf_token %}
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                          {{ form.title }}
+                        <label for="{{ form.title.id_for_label }}">Title</label>
+                      </div>
+                    </div>
+
+
+                    <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="addSubTaskSubmit">Submit</button>
+          </div>
+                  </form><!-- End floating Labels Form -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    <div class="modal fade" id="editSubtaskFormModal" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="formModalLabel">Update Task</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+                  <!-- Floating Labels Form -->
+                     <form class="row g-3" method="post" id="editSubtaskForm" action="">
+                      {% csrf_token %}
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                          {{ eform.title }}
+                        <label for="{{ editform.title.id_for_label }}">Title</label>
+                      </div>
+                    </div>
+
+
+
+                    <div class="col-md-12">
+                      <div class="form-floating mb-3">
+                       {{ eform.status }}
+                        <label for="{{ editform.title.id_form_label }}">Status</label>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="EditSubTaskSubmit">Submit</button>
+          </div>
+                  </form><!-- End floating Labels Form -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/static/js/ajax.js"></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+{% endblock %}

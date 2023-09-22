@@ -1,0 +1,58 @@
+{% extends 'PM/index.html' %}
+{% block body %}
+<form method="get" id="filter-staff" action="">
+  {% csrf_token %}
+  <div align="left" class="p-1 m-1">{{ form.as_p }} <button type="submit" class="btn btn-primary">Filter <i class="bi bi-search"></i></button></div>
+</form>
+    <!-- Table with stripped rows -->
+    <table class="table table-bordered table-striped table-hover" id="staff-table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">User</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in persons %}
+            <tr id="personlist">
+                <th scope="row"><a href="#">{{ forloop.counter }}</a></th>
+                <td>{% if i.photo %} <img src="{% if i.photo == 'None' %}/static/assets/img/20230814095643.jpg{% else %}/media/{{ i.photo }}{% endif %}"  height="50px" width="50px" alt="Profile" class="rounded-circle"> {% else %} <img src="/static/assets/img/20230814095643.jpg" height="50px" width="50px" alt="Profile" class="rounded-circle"> {% endif %}<br>{{ i.name }}</td>
+                <td>{{ i.email }}</td>
+                <td>{{ i.phone }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <!-- End Table with stripped rows -->
+    <div id="users-pagination-links" class="mt-3">
+        {% if persons.has_other_pages %}
+            <ul class="pagination">
+                {% if persons.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ persons.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                <li class="page-item active"><span class="page-link">{{ persons.number }}</span></li>
+                {% if persons.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ persons.next_page_number }}">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ persons.paginator.num_pages }}">Last</a></li>
+                {% endif %}
+            </ul>
+        {% endif %}
+    </div>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/ajax.js"></script>
+
+
+
+
+
+
+{% endblock %}

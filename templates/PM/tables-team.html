@@ -1,0 +1,48 @@
+{% extends 'PM/index.html' %}
+{% block body %}
+
+<body>
+
+          <!-- Table with stripped rows -->
+               <table class="table table-bordered table-striped table-hover ">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    
+                    <th scope="col">User</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th scope="col">Tasks</th>
+
+                    
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in team %}
+                  <tr> 
+                    <th scope="row"><a href="#">{{ forloop.counter }}</a></th>
+                    <td>{% if i.USER.photo == 'None' %} <img src="/static/assets/img/20230814095643.jpg" class="rounded-circle" height="50px" width="50px"> {% else %}<img src="/media/{{ i.USER.photo }}" width="50px" class="rounded-circle" height="50px">{% endif %}<br>{{ i.USER.name }}</td>
+                    <td>{{ i.USER.email }}</td>
+                    <td>{{ i.USER.phone }}</td>
+                    <td><a href="{% url 'adminviewtasks' i.USER.id %}">Show <i class="bi bi-eye-fill"></i></td>
+
+                  </tr>
+                  {% endfor %}
+
+                </tbody>
+              </table>
+
+
+
+
+
+
+ 
+
+
+
+
+
+</body>
+{% endblock %}

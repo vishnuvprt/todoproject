@@ -1,0 +1,275 @@
+{% extends 'PM/index.html' %}
+{% block body %}
+
+
+
+          <!-- Table with stripped rows -->
+          <div align="right" class="p-1 m-1"><a href="#" id="showAddFormLink" class="btn btn-primary">Add New<i class="bi bi-plus"></i></a></div>
+          <form method="get" id="filter-form" action="{% url 'projects' %}">
+            {% csrf_token %}
+          <div align="left" class="p-1 m-1">
+            <label for="{{ filterform.typeofproject.id_for_label }}">Project Type:</label>
+            {{ filterform.typeofproject }}
+            <label for="{{ filterform.statusofproject.id_for_label }}">Project Status:</label>
+            {{ filterform.statusofproject }}   
+
+            <label for="{{ filterform.pfromdate.id_for_label }}">From:</label>
+            {{ filterform.pfromdate }}  
+            <label for="{{ filterform.ptodate.id_for_label }}">To:</label>
+            {{ filterform.ptodate }}  
+            <button type="submit" class="btn btn-primary">Filter <i class="bi bi-search"></i></button>
+          </div>   
+      
+          
+          
+              </form>
+              <table class="table table-bordered table-striped table-hover " id="projects-table">
+
+                <thead>
+
+                  <tr>
+
+                    <th scope="col">#</th>
+                    <th scope="col">Project</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for i in data  %}
+                   <tr data-project-id="{{ i.id }}" >
+                    <th scope="row"  >{{ forloop.counter }}</th>
+                    <td><a href="{% url 'projectteam' i.pk %}">{{ i.projectname }}</a>
+                    </td>
+                    <td>{{ i.description }}</td>
+                    <td>{{ i.startdate }} to {{ i.enddate }}<br>{{ i.duration }}</td>
+                    <td> {% if i.status == 'Completed' %}
+                      <span class="badge bg-success"><i class="bi circle "></i> {{ i.status }}</span>
+                      {% elif i.status == 'Ongoing' %}
+                      
+                      <span class="badge bg-primary"><i class="bi circle"></i> {{ i.status }}</span>
+
+                      {% elif i.status == 'Cancel' %}
+
+                      <span class="badge bg-danger"><i class="bi circle "></i> {{ i.status }}</span>
+
+                      {% elif i.status == 'Onhold' %}
+                      <span class="badge bg-secondary"><i class="bi circle "></i> {{ i.status }}</span>
+                      
+                      {% else %}
+                      <span class="badge bg-info"><i class="bi circle "></i> {{ i.status }}</span>
+                      {% endif %} </td>
+
+                    <td><a href="#" class="btn btn-primary edit-btn" data-bs-toggle="modal" data-bs-target="#editFormModal" data-project-id="{{ i.id }}"> <i class="bi bi-pencil"></i></a></td>
+                    <td><a href="#" class="btn btn-danger delete-button" id="delete" yy="{{ i.id }}"> <i class="bi bi-trash"></i></a></td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+
+              <div id="pagination-links" class="mt-3">
+                {% if data.has_other_pages %}
+                    <ul class="pagination">
+                        {% if data.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ data.previous_page_number }}">Previous</a></li>
+                        {% endif %}
+                        <li class="page-item active"><span class="page-link">{{ data.number }}</span></li>
+                        {% if data.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ data.next_page_number }}">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ data.paginator.num_pages }}">Last</a></li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            
+            
+            
+            
+            
+            
+          <!-- End Table with stripped rows -->
+
+
+
+
+ <!-- Floating form for add project -->
+
+    <div class="modal fade" id="addFormModal" tabindex="-1" aria-labelledby="addFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="formModalLabel">Project Form</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+                  <!-- Floating Labels Form -->
+                  <form class="row g-3" id="addform" method="post" action="">
+                      {% csrf_token %}
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                          {{ form.pname }}
+                        <label for="{{ form.pname.id_for_label }}">Project Name</label>
+                        <span class="text-danger" id="projectNameError"></span> <!-- Add this line -->
+                      </div>
+                    </div>
+                      <div class="col-12">
+                      <div class="form-floating">
+                        {{form.media}}
+                          {{ form.description }}
+                        {% comment %} <label for="{{ form.description.id_for_label }}">Description</label> {% endcomment %}
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                          {{ form.startdate }}
+                        <label for="{{ form.startdate.id_for_label }}">Start Date</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                       <div class="form-floating">
+                           {{ form.enddate }}
+                        <label for="{{ form.enddate.id_for_label }}">End Date</label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="col-md-12">
+                        <div class="form-floating">
+                            {{ form.duration }}
+                          <label for="{{ form.floatingDuration.id_for_label }}">Duration</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating mb-3">
+                          {{ form.project_type }}
+                        <label for="{{ form.floatingSelect.id_for_label }}">Type</label>
+                      </div>
+                    </div>
+
+                      <div class="col-md-12">
+                          <label for="{{ form.user_field.id_for_label }}">Users</label>
+
+                      <div class="col-sm-10 row-sm-10">
+                        <select class="form-select" id="userField" multiple aria-label="multiple select example" name="{{ form.user_field.name }}">
+                          <option value="" selected disabled>Select User</option>
+                         {% for user in form.user_field.field.queryset %}
+                           <option value="{{ user.pk }}">{{ user.name }}</option>
+                           {% endfor %}
+                      </select>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+                  </form><!-- End floating Labels Form -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  <div class="modal fade" id="editFormModal" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="formModalLabel">Edit Project Form</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+                  <!-- Floating Labels Form -->
+                  <form class="row g-3" method="post" id="editForm" action="">
+                      {% csrf_token %}
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                          {{ eform.pname }}
+                        <label for="{{ eform.pname.id_for_label }}">Project Name</label>
+                        <div id="pname-error" class="error-message"></div>
+       
+                           </div>
+                    </div>
+                      <div class="col-12">
+                      <div class="form-floating">
+                          {{ eform.description }}
+                        <label for="{{ eform.description.id_for_label }}">Description</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                          {{ eform.startdate }}
+                        <label for="{{ eform.startdate.id_for_label }}">Start Date</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                       <div class="form-floating">
+                           {{ eform.enddate }}
+                        <label for="{{ eform.enddate.id_for_label }}">End Date</label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="col-md-12">
+                        <div class="form-floating">
+                            {{ eform.duration }}
+                          <label for="{{ eform.floatingDuration.id_for_label }}">Duration</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating mb-3">
+                          {{ eform.project_type }}
+                        <label for="{{ eform.floatingSelect.id_for_label }}">Type</label>
+                      </div>
+                    </div>
+
+                      <div class="col-md-12">
+                       <label for="{{ eform.user_field.id_for_label }}">Users</label>
+                      <div class="col-sm-10 row-sm-10">
+                           <select class="form-select" id="userField" multiple aria-label="multiple select example" name="{{ eform.user_field.name }}">
+                                <option value="" selected disabled>Select User</option>
+                               {% for user in eform.user_field.field.queryset %}
+                                 <option value="{{ user.pk }}">{{ user.name }}</option>
+                                 {% endfor %}
+                            </select>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-floating mb-3">
+                          {{ eform.status }}
+                        <label for="{{ eform.floatingSelect2.id_for_label }}">Status</label>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="editFormSubmit">Submit</button>
+          </div>
+                  </form><!-- End floating Labels Form -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/myapp.js"></script>
+    <script src="/static/js/ajax.js"></script>
+
+    
+{% endblock %}
