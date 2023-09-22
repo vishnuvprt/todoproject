@@ -143,7 +143,14 @@ class new_project_form(forms.Form):
             'placeholder':'Project Name'
         }),
     )
-    description = forms.CharField(widget=CKEditorUploadingWidget,required=True)#forms.CharField(label="Description",widget=forms.Textarea(attrs={'class': 'form-control','id': 'floatingTextarea','required': True,'placeholder': 'Description'}),)
+    description = forms.CharField(
+        widget=CKEditorWidget(
+            attrs={
+                'id': 'description_field',  # Change the ID as needed
+            }
+        ),
+        required=True,
+    )#forms.CharField(widget=CKEditorUploadingWidget,required=True)#forms.CharField(label="Description",widget=forms.Textarea(attrs={'class': 'form-control','id': 'floatingTextarea','required': True,'placeholder': 'Description'}),)
     startdate = forms.DateField(
         label="Start Date",
         widget=forms.DateInput(attrs={
@@ -192,7 +199,14 @@ class edit_project_form(forms.Form):
             'placeholder':'Project Name'
         }),
     )
-    description =forms.CharField(widget=CKEditorUploadingWidget,required=True) #forms.CharField(label="Description",widget=forms.Textarea(attrs={ 'class': 'form-control','id': 'floatingTextarea','required': True,'placeholder': 'Description'}),)
+    description = forms.CharField(
+        widget=CKEditorWidget(
+            attrs={
+                'id': 'description',  # Change the ID as needed
+            }
+        ),
+        required=True,
+    )   #forms.CharField(widget=CKEditorUploadingWidget,required=True) #forms.CharField(label="Description",widget=forms.Textarea(attrs={ 'class': 'form-control','id': 'floatingTextarea','required': True,'placeholder': 'Description'}),)
     startdate = forms.DateField(
         label="Start Date",
         widget=forms.DateInput(attrs={

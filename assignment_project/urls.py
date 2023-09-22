@@ -17,25 +17,16 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path,include
-<<<<<<< HEAD
 import debug_toolbar
-=======
 
->>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 from assignment_project import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('myapp/', include("assignment_app.urls")),
-<<<<<<< HEAD
     path('ckeditor/', include('ckeditor_uploader.urls')), 
     path('__debug__/', include(debug_toolbar.urls)),
-=======
-    path("ckeditor5/", include('django_ckeditor_5.urls')),
-
->>>>>>> 695c1564f21dc5bb418c10a064dd0137c00b2de9
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
-
 
 if settings.DEBUG:
     urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

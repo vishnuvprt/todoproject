@@ -57,9 +57,10 @@ $(document).ready(function() {
             method: 'GET',
             dataType: 'json',
             success: function(response) {
-
+                var editor = CKEDITOR.instances.description;
+                editor.setData(response.description);
                 $('#editFormModal #floatingName').val(response.projectname);
-                $('#editFormModal #floatingTextarea').val(response.description);
+                // $('#editFormModal #floatingTextarea').val(response.description);
                 $('#editFormModal #floatingSdate').val(response.startdate);
                 $('#editFormModal #floatingEdate').val(response.enddate);
                 $('#editFormModal #floatingDuration').val(response.duration);
@@ -110,6 +111,9 @@ $(document).ready(function() {
    
     $('#editFormSubmit').off('click').on('click', function(event) {
         event.preventDefault();
+        const editor = CKEDITOR.instances.description;
+        const descriptionTextArea = $('#description'); 
+        descriptionTextArea.val(editor.getData());
         var count=0;
         $.ajax({
             
