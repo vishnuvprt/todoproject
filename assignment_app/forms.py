@@ -50,7 +50,10 @@ class login_form(forms.Form):
     )
 
 
-
+phone_regex = RegexValidator(
+    regex=r'^\d{10}$',
+    message="Phone number must be 10 digits without spaces or special characters."
+)
 
 class SignupForm(forms.Form):
     name = forms.CharField(
@@ -63,6 +66,7 @@ class SignupForm(forms.Form):
             'id': 'yourName',
             'required': True,
         }),
+        
     )
 
     email = forms.EmailField(
@@ -82,6 +86,7 @@ class SignupForm(forms.Form):
             'required': True,
            
         }),
+        validators=[phone_regex]
     )
 
     password = forms.CharField(

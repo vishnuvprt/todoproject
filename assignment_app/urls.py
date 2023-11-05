@@ -49,6 +49,7 @@ urlpatterns = [
     path('notifications/', NotificationClass.as_view(), name='notifications'),
     path('reminders/', GetReminderStatus.as_view(), name='reminders'),
     path('updatereminders/', UpdateReminderStatus.as_view(), name='updatereminders'),
+    path('update_team_lead/', SetTeamLead.as_view(), name='update_team_lead'),
 
 
 

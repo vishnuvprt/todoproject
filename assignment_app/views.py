@@ -63,10 +63,10 @@ class Login_Class(View):
                     else:
                         return HttpResponse("<script>alert('Welcome User');window.location='/myapp/userdashboard/'</script>")
                 else:
-                    return render(request, self.template_name, {'form': form, 'Error': 'No user found'})
+                    return render(request, self.template_name, {'form': form, 'Error': 'Invalid username or password'})
             except Exception as e:
                 print(e)
-                return render(request, self.template_name, {'form': form, 'Error': 'No user found'})
+                return render(request, self.template_name, {'form': form, 'Error': 'Invalid username or password'})
         else:
             return render(request, self.template_name, {'form': form})
 
@@ -111,7 +111,6 @@ class ChangePasswordAdmin(View):
             confp=form.cleaned_data['confirmpassword']
             hashed_password = make_password(newp)
             holdp=make_password(oldp)
-            print(holdp,"============")
             try:
                 lobj= Users.objects.get(password=holdp,pk=request.session['lid'])  #Login.objects.get(password=oldp,pk=request.session['lid'])
                 lobj.password=hashed_password
@@ -629,7 +628,7 @@ class SortTasksView(View):
             queryset = queryset.order_by('-title')
 
         elif sort_by == 'priority_asc':
-            queryset = queryset.order_by('priority')
+            queryset = queryset.order_by('priority')         
 
         elif sort_by == 'priority_desc':
             queryset = queryset.order_by('-priority')
@@ -1216,8 +1215,43 @@ class NotificationClass(View):
 
 
 
+class SetTeamLead(View):
+    @method_decorator([login_required])
+    def post(self, request):
+        user_id = request.POST.get('user_id')
+        project_id = request.POST.get('project_id')
+        is_team_lead = request.POST.get('is_team_lead')
+        
+        try:
+            # Get the project
+            project = get_object_or_404(Project, id=project_id)
 
+            # Find the current team lead (if any)
+            current_team_lead = ProjectTeams.objects.filter(PROJECT=project, is_team_lead=True).first()
 
+            # Find the user to update
+            user_to_update = get_object_or_404(ProjectTeams, PROJECT=project, USER_id=user_id)
+
+            if is_team_lead == 'true':
+                if current_team_lead:
+                    # If there is a current team lead, clear their role
+                    current_team_lead.is_team_lead = False
+                    current_team_lead.save()
+                # Set the selected user as the new team lead
+                user_to_update.is_team_lead = True
+                user_to_update.save()
+            else:
+                # Clear the team lead role for the selected user
+                user_to_update.is_team_lead = False
+                user_to_update.save()
+
+            return JsonResponse({'success': True})
+        except Project.DoesNotExist:
+            return JsonResponse({'error': 'Project not found.'})
+        except ProjectTeams.DoesNotExist:
+            return JsonResponse({'error': 'Project team not found.'})
+        except Users.DoesNotExist:
+            return JsonResponse({'error': 'User not found.'})
 
 
 

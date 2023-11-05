@@ -1,4 +1,4 @@
-$(document).ready(function() {
+// $(document).ready(function() {
     
     $('#addform').submit(function(event) {
         event.preventDefault();
@@ -12,7 +12,9 @@ $(document).ready(function() {
 
 
                 alert('New Project Added!');
+                location.reload(true);
                 form.trigger('reset');
+                form.trigger('.data-bs-dismiss');
                 
                 var newRow = '<tr>' +
                 '<th scope="row">'+response.slno+'</th>' +
@@ -124,6 +126,8 @@ $(document).ready(function() {
             success: function(response) {
                 
                 alert("Project updated");
+                $('#editForm').trigger('.data-bs-dismiss');
+                location.reload(true);
                 count++;
                 console.log("Updated project"+count);
                 var editedRow = $('#projects-table').find('tr[data-project-id="' + projectIdr + '"]');
@@ -1200,6 +1204,6 @@ const personList = $('#staff-table');
 
 
 
-});
+// });
 
 

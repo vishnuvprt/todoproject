@@ -77,7 +77,7 @@ class Project(models.Model):
 class ProjectTeams(models.Model):
     PROJECT=models.ForeignKey(Project,on_delete=models.CASCADE)
     USER=models.ForeignKey(Users,on_delete=models.CASCADE)
-
+    is_team_lead = models.BooleanField(default=False)
 
 class Task(models.Model):
     title=models.CharField(max_length=20)

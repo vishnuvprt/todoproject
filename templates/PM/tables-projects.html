@@ -44,7 +44,7 @@
                     <th scope="row"  >{{ forloop.counter }}</th>
                     <td><a href="{% url 'projectteam' i.pk %}">{{ i.projectname }}</a>
                     </td>
-                    <td>{{ i.description }}</td>
+                    <td>{{ i.description|safe }}</td>
                     <td>{{ i.startdate }} to {{ i.enddate }}<br>{{ i.duration }}</td>
                     <td> {% if i.status == 'Completed' %}
                       <span class="badge bg-success"><i class="bi circle "></i> {{ i.status }}</span>

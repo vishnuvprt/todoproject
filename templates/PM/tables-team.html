@@ -13,6 +13,7 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th scope="col">Tasks</th>
+                    <th scope="col">Team Lead</th>
 
                     
 
@@ -26,6 +27,10 @@
                     <td>{{ i.USER.email }}</td>
                     <td>{{ i.USER.phone }}</td>
                     <td><a href="{% url 'adminviewtasks' i.USER.id %}">Show <i class="bi bi-eye-fill"></i></td>
+                    <td> <div class="form-check form-switch">
+                      <input class="form-check-input team-lead-toggle"  type="checkbox" data-user-id="{{i.USER.id}}" data-project-id="{{i.PROJECT.id}}" id="flexSwitchCheckDefault" {%if i.is_team_lead  == True %} checked="" {%else%} {%endif%}>
+                    </div>
+                    </td>
 
                   </tr>
                   {% endfor %}
@@ -41,7 +46,43 @@
  
 
 
+{%block script%}
+<!-- Include jQuery library if not already included -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+  $(document).ready(function() {
+    $('.team-lead-toggle').on('click', function() {
+      
+      var user_id = $(this).data('user-id');
+      var project_id = $(this).data('project-id');
+      var is_team_lead = $(this).is(':checked');
+      var csrf_token = '{{ csrf_token }}'; // Get the CSRF token from the template
+
+      console.log(user_id,project_id,is_team_lead);
+      $.ajax({
+        type: 'POST',
+        url: '{% url 'update_team_lead' %}',
+        data: {
+          'user_id': user_id,
+          'project_id': project_id,
+          'is_team_lead': is_team_lead
+        },
+         headers: {
+            'X-CSRFToken': csrf_token // Include the CSRF token in the request headers
+          },
+        success: function(data) {
+          if (data.success) {
+            location.reload();
+          } else {
+            // Handle errors if necessary
+          }
+        }
+      });
+    });
+  });
+</script>
+{%endblock%}
 
 
 </body>
